@@ -1,7 +1,7 @@
 #### Intall Kubectl  
 Inside same host where Jenkins is running (container, vm or host).
 
-#### Install [[aws-iam-authenticator]] 
+#### Install [aws-iam-authenticator](./aws-iam-authenticator.md)
 Inside Jenkins Container
 
 #### Create **kubeconfig file** to connect to EKS cluster
