@@ -1,3 +1,4 @@
+# Installing aws-iam-authenticator
 ### Install on Linux  
 1. Download binary  
 
