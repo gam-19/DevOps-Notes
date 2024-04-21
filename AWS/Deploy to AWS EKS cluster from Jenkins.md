@@ -15,7 +15,7 @@ Tip: Inside 'jenkis' user.
 
 #### Installing / Updating Kubectl
 
-Source:
+Sources:
 https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html  
 https://www.geeksforgeeks.org/install-and-set-up-kubectl-on-linux/  
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
