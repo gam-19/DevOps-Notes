@@ -2,7 +2,7 @@
 # Jenkins > ECR > EKS
 
 
-![](Containerization\Kubernetes\_K8s-assets\jenkins_pipeline_ECR_EKS.png)  
+![](/Containerization/Kubernetes/_K8s-assets/jenkins_pipeline_ECS_EKS.png)  
 
 ### Pushing Docker image to ECR
 1. Create ECR Repository  
@@ -13,7 +13,7 @@
         * We might have one repository per application.
 2. Create credentials for ECR in Jenkins.  
 ECR gives you instructions that you can use as reference:  
-![](AWS\Containerization\Kubernetes\_K8s-assets\ECR_push_cmds.png)  
+![](/AWS/_assets/ECR_push_cmds.png)  
 
 
     * Get AWS login password:  
@@ -23,12 +23,18 @@ ECR gives you instructions that you can use as reference:
     ```  
     Note: You should already have AWS Cli and AWS user configured.
     * Jenkins dashboard > Manage Jenkins > Credentials > System > Global credentials > New credentials  
+    ID: ecr-credentials
     Kind: Username and password  
     Username: AWS
     Password: [Get it from previous point "Get AWS login password"]
 3. Adjust building and tagging  
 
 ### Fetching and starting Docker image in EKS  
-4. [Creating Secret for ECR]() Credentials to be able to pull images from ECR.  
-[create the secret](Containerization/Creating%20K8s%20secret.md)
+4. [Creating Secret for ECR](/Containerization/Creating_K8s_secret.md) credentials to be able to pull images from ECR.  
 6. Edit jenkins file
+* Build stage:  
+    * Update credentials using creds created in Jenkins for ECR.  
+    ![](/AWS/_assets/Using_DockerRepoEnvVar.png)
+
+    * Create environmental variables for 'Docker server' and 'Docker Repo'  
+    ![](/AWS/_assets/DockerRepoEnvVar.png)
