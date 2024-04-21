@@ -15,23 +15,21 @@ Jenkins > Gitlab > Docker Hub | Jenkins > EKS
 
     Ej 2:
     ![](AWS/_assets/app_name_EnvVar2.png)
-
+    
 * Install 'gettext-base'  in Jenkins container/server.
 It contains the 'envisubst' tool.
   ```bash
     apt-get update
     apt-get install gettext-base
   ```
-* Create K8s secret to auth with Docker Registry  
+* **Create K8s secret to auth with Docker Registry**  
  To access docker image  in Docker Registry privage repo we need to authenticate from K8s cluster. Hence we need to create a secret.  
- Tip: 
-    * Don't create in Pipeline otherwise secret will be recreate everytime the pipeline runs. 
-    We only need the secret be created once.
-    * Secret usually will be hosted in projects repo.
-    * One secret per K8s Namespace.
-    * You could also [create the secret](Containerization/Creating%20K8s%20secret.md) it directly in the K8s cluster from kubectl.
+
+    Tip:  
+        * Don't create in Pipeline otherwise secret will be recreate everytime the pipeline runs. 
+        * We only need the secret be created once.
+        * Secret usually will be hosted in projects repo.  
+        * One secret per K8s Namespace.  
+        * You **might** also [create the secret](Containerization/Creating%20K8s%20secret.md) it directly in the K8s cluster from kubectl.  
 
 
-
-Jenkins > ECS > EKS
-![](_images/jenkins_pipeline_ECS_EKSpng.png)

@@ -1,0 +1,14 @@
+# JENKINS BUILD AUTOMATION (IN PROGRESS)  
+
+## BUILD AUTOMATION  
+- Jenkins > Docker HUB
+- Jenkins > Azure
+- Jenkins > AWS ECR
+- Jenkins > DIGITAL OCEAN
+
+## DEPLOYMENT AUTOMATION
+- Jenkins > Azure
+- Jenkins > Linode
+- Jenkins > AWS EC2
+- Jenkins > AWS EKS
+
