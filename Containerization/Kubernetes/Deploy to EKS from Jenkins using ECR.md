@@ -1,5 +1,5 @@
-
-# Jenkins > ECR > EKS  
+# JENKINS
+# Jenkins > ECR > EKS
 
 
 ![](Containerization\Kubernetes\_K8s-assets\jenkins_pipeline_ECR_EKS.png)  
@@ -26,10 +26,9 @@ ECR gives you instructions that you can use as reference:
     Kind: Username and password  
     Username: AWS
     Password: [Get it from previous point "Get AWS login password"]
-3. Adjust building and tagging
+3. Adjust building and tagging  
 
-
-### Fetching and starting Docker image in EKS
-4. [Creating Secret for ECR](Containerization/Creating%20K8s%20secret.md) Credentials to be able to pull images from ECR.  
+### Fetching and starting Docker image in EKS  
+4. [Creating Secret for ECR]() Credentials to be able to pull images from ECR.  
 [create the secret](Containerization/Creating%20K8s%20secret.md)
 6. Edit jenkins file
