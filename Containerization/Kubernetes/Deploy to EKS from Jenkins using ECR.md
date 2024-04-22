@@ -19,9 +19,11 @@ ECR gives you instructions that you can use as reference:
     * Get AWS login password:  
 
     ```bash
-        aws ecr get-login-password
+        aws ecr get-login-password --region us-east-2
     ```  
-    Note: You should already have AWS Cli and AWS user configured.
+    Note: 
+    * It's very important that you use the '--region xxxxx' in the command above to get aws login password, otherwise, it might give you another password, and arise login failures.  
+    * You already should have AWS Cli and AWS user configured.
     * Jenkins dashboard > Manage Jenkins > Credentials > System > Global credentials > New credentials  
     ID: ecr-credentials
     Kind: Username and password  
@@ -38,3 +40,6 @@ ECR gives you instructions that you can use as reference:
 
     * Create environmental variables for 'Docker server' and 'Docker Repo'  
     ![](/AWS/_assets/DockerRepoEnvVar.png)
+
+7. Make sure K8s Deployment.yaml file also uses the ecr creds:
+![](/AWS/_assets/K8s_Deployment_file_creds.png)
