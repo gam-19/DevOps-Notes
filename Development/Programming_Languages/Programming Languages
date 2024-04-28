@@ -1,0 +1,15 @@
+## Defs:
+Interpreted programming language:  
+- Executes code directly without the need for a separate compilation step.   
+- The interpreter translates each statement or line into machine code or bytecode on-the-fly and executes it immediately.  
+E.g.: Javascript, Python, Ruby, Perl, Bash.
+
+Compiled programming languages:  
+ * Require a separate compilation step where the source code is translated into machine code or an intermediate language before execution.  
+ E.g.: C, C++, Java, C#, Go, Swift.
+
+    Pro:  
+    * Faster execution, better optimization, direct hardware access, and increased control over memory management.  
+
+    Con:  
+    * More development time due to the compilation step and platform-specific considerations.  
