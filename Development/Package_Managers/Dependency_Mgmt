@@ -1,0 +1,6 @@
+## Dependency management
+* All languages have a dependency file: package.json, pom.xml, buil.gradle
+* Dependency repository, where dependencies are searched.
+* Set of commands and command line tools.Like, test, start app, build app.
+* All languages have their own package manager. Java: Maven and Gradle; JavaScript: npm and Yarn; Python:Pip.
+* They have an artifact repository or artifactory, package mangers usually provide command to push, and pull from it.  

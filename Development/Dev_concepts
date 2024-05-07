@@ -1,0 +1,28 @@
+
+
+### A REST API
+* Specific type of application programming interface (API) that follows a set of guidelines and constraints known as REST (Representational State Transfer). 
+* Popular way for web applications to communicate with each other and with external services.
+
+Breakdown:
+
+* **API (Application Programming Interface):** An API acts as a messenger between different software applications. It allows applications to request and receive data from each other in a structured way. 
+* **REST (Representational State Transfer):** REST is a set of architectural guidelines that defines how data is exchanged between applications.  It uses common web technologies like HTTP requests and responses, JSON formatting, and URIs to identify resources.
+
+**Benefits of REST APIs:**
+
+* **Simple and Standardized:**  Easy to understand and follow because they leverage common web technologies. Easier for developers to build and integrate applications using REST APIs.
+* **Scalable:** Can handle a large volume of requests efficiently, making them suitable for web applications with a big user base.
+* **Flexible:** REST APIs can be used to exchange a wide variety of data types.
+
+**How REST APIs work:**
+
+Imagine a REST API as a waiter in a restaurant. When a customer (client application) wants to order food (data), they tell the waiter (REST API) what they want (by making a request). The waiter then relays the order to the kitchen (server) and brings back the food (data) to the customer.
+
+REST APIs use HTTP verbs to perform different actions on data:
+
+* **GET:** Retrieves data from a server. (Similar to browsing a restaurant menu)
+* **POST:** Creates new data on the server. (Similar to placing an order)
+* **PUT:** Updates existing data on the server. (Similar to asking for changes to an order)
+* **DELETE:** Deletes data from the server. (Similar to canceling an order)
+
