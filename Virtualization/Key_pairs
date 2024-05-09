@@ -1,0 +1,43 @@
+
+
+### On Windows  
+You can generate an RSA key pair using either the built-in OpenSSH client (if enabled) or a third-party tool like PuTTYgen. 
+
+**Method 1: Using OpenSSH (if available):**
+
+1. **Check for OpenSSH:** Open a PowerShell window and type `ssh -v`. If OpenSSH is installed and working, you'll see version information. If not, proceed to Method 2.
+2. **Generate the key:**  In the PowerShell window, type:
+
+```powershell
+ssh-keygen -t rsa -b 4096 (Optional: -C "your_key_comment")
+```
+
+   - Replace `4096` with your desired key size (2048 is minimum, 4096 is recommended for better security).
+   - Add the `-C "your_key_comment"` option (including quotes) to specify a comment for your key (optional).
+
+3. **Enter a passphrase (optional):** You'll be prompted to enter a passphrase twice for added security. This is optional but recommended.
+
+4. **Save the key:** The key pair will be saved by default to the `.ssh` directory in your user profile (e.g., `C:\Users\<username>\.ssh`). The private key will be named `id_rsa` and the public key will be named `id_rsa.pub`.
+
+**Method 2: Using PuTTYgen:**
+
+1. **Download PuTTYgen:** Download PuTTYgen ([PuTTYgen download]) from the official PuTTY website.
+
+2. **Run PuTTYgen:** Launch PuTTYgen.
+
+3. **Generate the key:** Click the "Generate" button. Move your mouse randomly in the blank area to increase the randomness of the key generation.
+
+4. **Enter a passphrase (optional):** Similar to OpenSSH, you can enter a passphrase for added security (optional).
+
+5. **Save the key:** Click "Save private key" and choose a location and filename for your private key (usually in `.ppk` format). The public key will be displayed in the top box of the PuTTYgen window.
+
+**Using the generated key:**
+
+* After generating the key pair, you'll need to copy the public key content and add it to the authorized_keys file on your remote server (EC2 instance in your case). There are various ways to achieve this depending on your server setup.
+* When connecting to your server using SSH, specify the path to your private key file using the `-i` option:
+
+```
+ssh -i C:\Users\<username>\.ssh\id_rsa (or path to your .ppk file) ec2-user@3.129.216.34
+```
+
+Remember to keep your private key secure and avoid sharing it with anyone. 

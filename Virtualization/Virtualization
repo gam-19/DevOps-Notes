@@ -1,0 +1,10 @@
+Virtualization type:
+HVM (Harware Virtualization Machine)  
+* Has a fully virtualized hardware set. Own emulated CPU, memory, etc.
+* Potencially slower initially, but can leverage hardware extensions for better performance.  
+Note: Modern cloud instances are optimized for HVM, making the preferred choise.
+
+PV (Paravirtualization)
+* Modifies the guest OS for better performance.
+* Guest OS sees partially virtualized hardware set.
+* Faster due to optimized guest OS kenel.
