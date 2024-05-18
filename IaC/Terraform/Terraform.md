@@ -55,17 +55,8 @@ Add this portion to the config file.
         value = aws_vpc.development-vpc.id
     }
 ```
-## 5. What addvantages does it provide  
-## 6. Installing Terraform  
-### Windows  
-* [Download](https://developer.hashicorp.com/terraform/install) from official Hashicorp site.  
-* Create folder C:\terraform and extract/ .exe there.
-* Add C:\terraform to 'Path' in Environment Variables > System  
 
-![](/IaC/Terraform/_terra-images/Terra_path_EnvVar_Win.png)
-
-
-## 8. Basic cmds  
+## 8. TF Core cmds  
 - `terraform init` = get your project folder ready with providers
 - `terraform plan` = show what is going to be created, and changed during the next command based on our code.
 Also shows provider's list of **available resources names**.  
