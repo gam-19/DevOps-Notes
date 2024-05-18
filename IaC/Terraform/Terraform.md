@@ -4,15 +4,42 @@
 * An open-source infrastructure as code (IaC) tool.
 * "Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently" - Hashicorp.
 * Infrastructure provisioning-focused tool.  
-## 2. How it works  
+* Let's you **automate and manage**: infrastructure, platform and services running on that platform.  
+
+## 2. Why to use  
+* Allows us to apply software development best practices to infrastructure development. E.g. Version control, code reviews, etc.
+* Compatible with many clouds and services, almost any services that provides APIs.
+* Allow us to **Automate** continuous changes to our infra.
+* Allow us to easy **replicate** infra **on different environments**, like Dev, Staging, Prod.
+
+## 3. How it works  
+* Terraform + Ansible (config mgmt)  
+  ![alt text](/IaC/Terraform/_terra-images/image-2.png)
+  TF provisions VMs > Ansible installs all necessary dependencies.
+* Terraform + Templating Tools  
+  ![alt text](/IaC/Terraform/_terra-images/image-1.png) 
+  TF provisions servers and Server templating, e.g. Packer from Hashicorp, is used to build the image from which those VMs are created. All dependences are pre-packaged into the machine image.
+* Terraform + Kubernetes 
+    ![alt text](/IaC/Terraform/_terra-images/image.png)
+  TF defines cloud resources and K8s to define how our application is deployed and managed on those cloud resources.
+
+### Terraform Architecture
+![alt text](/IaC/Terraform/_terra-images/TF_Arch.png)  
+
+### Configuration file
+* That is is done by defining the resources in human-readable **configuratin file** that you can *version*, *re-use*, and *share.*
+* Definition configuration file is **declarative**.  
+  - Declarative: defines **WHAT** the end result or desired state is.  
+  - Imperative: defines the exact steps to follow - **HOW**.
 
 ![](./_terra-images/How_TF_works.png)
  * IT / Cloud providers allow creating/managing their resources through GUI console and CLI or API, the last one being faster.  
- * Providers  
+  
+### Providers  
  [Browse Terraform Providers](https://registry.terraform.io/browse/providers)  
 
 ### 3. Removing / Destroying Resources
-Option 1: Just remove the resource from the terraform file, and apply again.  
+Option 1: Just remove the resource code from within config file, and apply again.  
 Note: This is **recommended** because your config file will correspond  your current state.
 OPtion 2:  Destroy command:  
 terraform destroy -target [resource type.resource name]  
@@ -28,7 +55,6 @@ Add this portion to the config file.
         value = aws_vpc.development-vpc.id
     }
 ```
-## 4. Why to use  
 ## 5. What addvantages does it provide  
 ## 6. Installing Terraform  
 ### Windows  
@@ -80,5 +106,10 @@ Note: Good thing, you don't have to know in which **order** you need **to delete
     Tip:
     * It is recommened NOT to use the default resources AWS gives you, e.g. defaulta vpc, default subnet, etc. Instead create new ones, in case we need to destroy everything.  
 * ### Run Nginx Docker container on EC2 instance
+
+
+Creating a structured terraform project with standard modules.
+Structuring terraform project with standarized modules. (group of similar resources)
+Using modules, how to reference resources inside.
 
 
