@@ -27,17 +27,56 @@
 ![alt text](/IaC/Terraform/_terra-images/TF_Arch.png)  
 
 ### Configuration file
-* That is is done by defining the resources in human-readable **configuratin file** that you can *version*, *re-use*, and *share.*
+* Define the resources in human-readable **configuratin file** that you can *version*, *re-use*, and *share.*
 * Definition configuration file is **declarative**.  
   - Declarative: defines **WHAT** the end result or desired state is.  
   - Imperative: defines the exact steps to follow - **HOW**.
-
-![](./_terra-images/How_TF_works.png)
- * IT / Cloud providers allow creating/managing their resources through GUI console and CLI or API, the last one being faster.  
+ * IT / Cloud providers allow creating/managing their resources through GUI console and CLI or API, the last one being faster. 
+![](./_terra-images/How_TF_works.png) 
   
 ### Providers  
- [Browse Terraform Providers](https://registry.terraform.io/browse/providers)  
+ * Plugins Terraform uses to manage the resources.
+* Providers expose resources for specific infrastructure platform (e.g. AWS).
+* Responsible for understanding API of that platform.
+* Just code that knows how to talk to specific technology or platform.  
 
+[Browse Terraform Providers](https://registry.terraform.io/browse/providers)
+
+### Resources
+* To create a new resource.  
+  
+![alt text](/IaC/Terraform/_terra-images/TF_resource.png)
+
+### Data Sources
+* To query an existing resource  
+
+![alt text](/IaC/Terraform/_terra-images/TF_datasource.png)
+Note: As in resources you preoviously need to specify the providers. Eg. provider "aws"
+
+### Tags
+* Basically are labels for human consumption to have more information about the resources.
+*  Also for referencing components from other components (programatically). E.g. Cloud Controller Managers.  
+    ![alt text](/IaC/Terraform/_terra-images/TF_tag_for_cloud_ctrl_mgr.png)  
+
+### Variables
+* Let us **customize** behaviour without editing the configuration file.  
+2 Step to use variables:  
+    1. **Define** variables (inside config file main.tf or variables specific file, e.g variables.tf), and use it in your TF script.
+    2. **Set** variables **values** when applying the script. 
+
+    ![alt text](/IaC/Terraform/_terra-images/TF_variables.png)
+
+    3 Steps to set variable values
+    ![alt text](/IaC/Terraform/_terra-images/TF_var_values.png)
+    Note: Every environment could have its own var file. E.g. terraform-dev.tfvars, terraform-staging.tfvars, terraform-prod.tfvars. 
+
+### Environmental Variables
+* TF-Env Var: TF has env vars, you can use them to change TF's default hehaviour, e.g. TF Logs:
+  ```Bash
+    export TF_LOG=off
+  ```
+* AWS Env Vars: Set AWS credentials for AWS provider as environment variable.
+  
 ### 3. Removing / Destroying Resources
 Option 1: Just remove the resource code from within config file, and apply again.  
 Note: This is **recommended** because your config file will correspond  your current state.

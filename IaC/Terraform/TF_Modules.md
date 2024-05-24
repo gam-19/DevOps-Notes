@@ -8,10 +8,10 @@ Without modules, complex configurations in a huge file with no overview.
 Modulos allows:  
 * Organize and group configurations.
 * Encapsulate into distinct logical components.
-* Reuse
-* Expose created resources or their specific attributes.  
+* Reusage
+* Expose created resources and their specific attributes.  
     - E.g 1. Module for AWS EC2 instance, with its configurations around it: Key pair, security group, volumes, aws ami, etc.   
-    - E.g 2. Module f or VPC including subnet, internet gateway, route table.
+    - E.g 2. Module for VPC including subnet, internet gateway, route table.
     We can reuse that "Web server" module to deploy it in another Region, another environment (Staging, QA, Dev, Prod)
 
 ## HOW?
@@ -25,7 +25,7 @@ Good practice for dividing modules files:
 - providers
 
 Steps:  
-Creating module
+Creating custom module
 * Create dir with module name  
 * Creates main.tf, output.tf and variables.tf
 * Write the code in main.tf
@@ -41,6 +41,6 @@ Using module in root main.tf file
     env_prefix = var.env_prefix
     vpc_id = aws_vpc.myapp-vpc.id
     default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id      
-}
+    }
 ```
 Reference all variables required by the module, make sure variables value are in terraform.tfvars file or you can hardcode when calling th module.

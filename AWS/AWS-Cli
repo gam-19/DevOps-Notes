@@ -1,3 +1,6 @@
+
+Show configuration values AWS CLI is using to interact with AWS account and services.
+
 ```bash
 aws configure list
 ```

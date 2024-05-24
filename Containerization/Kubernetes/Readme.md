@@ -1,0 +1,1 @@
+EKS requires very specif VPC configuration, subnet, route table, etc, thefore we usually create a new VPC, and not use default VPC.
