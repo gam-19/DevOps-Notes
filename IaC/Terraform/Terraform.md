@@ -50,8 +50,8 @@
 ### Data Sources
 * To query an existing resource  
 
-![alt text](/IaC/Terraform/_terra-images/TF_datasource.png)
-Note: As in resources you preoviously need to specify the providers. Eg. provider "aws"
+![alt text](/IaC/Terraform/_terra-images/TF_datasource.png)  
+Note: As in resources you preoviously need to specify the provider. Eg. provider "aws"
 
 ### Tags
 * Basically are labels for human consumption to have more information about the resources.
