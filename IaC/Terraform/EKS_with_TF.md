@@ -11,3 +11,8 @@ Manual EKS cluster involves creating and configuring many componentes:
 
 **Terraform** is currently the **best way to provision an EKS cluster!**
 Most efficiente way for creation and management EKS cluster.
+
+Steps:
+* Create VPC
+  AWS VPC Terraform module in Terraform Registry.
+* asdfa
