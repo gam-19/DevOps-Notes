@@ -10,3 +10,6 @@ Steps
 
 * We need to create Worker nodes using EC2 instances or Node Groups
 * connect them to the Master nodes.
+
+Considerations:  
+AWS EKS cluster pricing 0.10 $us/hr

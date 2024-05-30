@@ -19,3 +19,29 @@
    * Metrics
    * Logs
 5. asdfa
+
+
+Boostup software develop release
+* Docker / Docker compose
+* CI/CD
+Infra provisioning
+Infra stability
+Infra security
+Cost optimization
+
+
+PROJECTS
+App using Docker Compose + Gitlab CI/CD
+App using Git Actions
+App with EKS
+App Terraform + EKS
+App in Azure Pipeline
+App in AWS CI/CD
+
+
+GAM To DO:
+* Dominar mejor Git, reforzar comandos avanzados de Git (Git stash, rebase, reset, restore), hacer ejercicios.
+* Dominar docker y docker compose.
+  - Poder hacer docker/compose files solito.
+* Volver a setear Jenkins de cero y configurar CI/CD de cero solito.
+* 

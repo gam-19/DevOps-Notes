@@ -94,3 +94,15 @@ I have taken these from [atlassian](https://www.atlassian.com/git/tutorials/atla
 | git push \<remote> --force | `git push <remote> --force` | Forces the git push even if it results in a non-fast-forward merge. Do not use the --force flag unless you’re sure you know what you’re doing.  |
 | git push \<remote> --all   | `git push <remote> --all`   | Push all of your local branches to the specified remote.                                                                                        |
 | git push \<remote> --tags  | `git push <remote> --tags`  | Tags aren’t automatically pushed when you push a branch or use the --all flag. The --tags flag sends all of your local tags to the remote repo. |
+
+
+
+Deleting branch  
+```
+#Flag -D forces deletion
+git branch -D <branch_name> 
+
+#Reflect the deletion in the remote repo
+git push origin --delete <branch_name>
+```
+
