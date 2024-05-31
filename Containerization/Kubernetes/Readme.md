@@ -12,4 +12,4 @@ Steps
 * connect them to the Master nodes.
 
 Considerations:  
-AWS EKS cluster pricing 0.10 $us/hr
+AWS EKS cluster pricing 0.10 $us/hr.
