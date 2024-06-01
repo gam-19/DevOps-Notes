@@ -8,6 +8,8 @@
 
 We created EKS cluster in specific AWS region, which has multiple AZ, and that gives us higly available Control Plane and Worker nodes
 
+EKS is created over the AWS Mgmt console or eksctl tool actually use AWS Cloud formation that has templates with required configurations.
+
 Steps
 * Create VPC with all subnets and require configurations
   - Using AWS Cloud formation template.
