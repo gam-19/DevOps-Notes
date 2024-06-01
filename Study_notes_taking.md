@@ -1,5 +1,5 @@
-1. Watch the video, read the material and understand concepts.
-2. Watch again and take notes.
+1. Go through the material (reading, video, audio) and understands the concepts.
+2. Do the material again and take notes.
    - Concepts
    - Process steps
 3. Watch again and do hands on.
