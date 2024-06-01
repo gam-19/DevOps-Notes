@@ -1,0 +1,6 @@
+- Watch the video, read the material and understand concepts.
+- Watch again and take notes.
+- Watch again and do hands on.
+- Review notes and explain concepts.
+- Explain the explain hands on.
+- Finally, practice by your self, replicate set up using your notes.
