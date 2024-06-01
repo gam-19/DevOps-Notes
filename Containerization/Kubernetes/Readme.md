@@ -22,5 +22,6 @@ AWS EKS cluster pricing 0.10 $us/hr.
 With all subnets and require configurations  
    - Using AWS Cloud formation template.
    - Using Terraform configuration file.
-* Create **Control Plane: Master nodes**.
+* Create **Control Plane**   
+  Master nodes
 
