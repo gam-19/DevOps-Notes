@@ -1,9 +1,12 @@
 ## Setup authentication with Cloud Provider  
 Options:
-1. **Hardcode** the API **keys and secrets** on the main.tf, under the provider section. NOT recommended.
+1. **Hardcode credentials**  (NOT recommended)  
+In main.tf under the provider section hardcode the API **keys and secrets**. 
    
-2. Set environment variables  
+1. Set environment variables  (Highly discorraged)  
+   
    E.g. AWS authentication  
+
    MacOS
    ```bash
     export AWS_ACCESS_KEY_ID = "[KEY]"
@@ -20,9 +23,9 @@ Options:
 
     terraform apply -var-file terraform-dev.tfvars
    ```
-   NOTE: While setting credentials in environment variables works, it's highly discouraged.
+   NOTE: While setting credentials in environment variables works, it's **highly discouraged**.
 
-3. **Credentials File:**
+2. **Credentials File:**
    This is highly secure alternatives to manage your Terraform credentials:
 
    - Create a file named `credentials` (no extension) in:
@@ -50,7 +53,7 @@ Options:
    }
    ```
 
-4. **AWS Systems Manager Parameter Store (Recommended):**
+3. **AWS Systems Manager Parameter Store (Recommended):**
 
    - Store your credentials securely within AWS. Terraform can access them securely. Refer to the AWS documentation for specific instructions.
 
