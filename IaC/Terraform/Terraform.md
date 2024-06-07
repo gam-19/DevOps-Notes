@@ -35,11 +35,13 @@
 ![](./_terra-images/How_TF_works.png) 
   
 ### Providers  
-In terraform we connect to a technology (AWS, Jenkins, Databases, etc) and use their API to create resources and configure them.
- * Plugins Terraform uses to manage the resources.
-* Providers expose resources for specific infrastructure platform (e.g. AWS).
-* Responsible for understanding API of that platform.
-* Just code that knows how to talk to specific technology or platform.  
+With Terraform we basically connect to a technology (AWS, Jenkins, Databases, etc) and use their API to create resources and configure them.
+
+TF providers are code that "know" how to talk to those Technologies or platforms.
+ 
+* Cloud providers expose resources for specific infrastructure platform (e.g. AWS).
+* TF Providers are responsible for understanding APIs of those platforms.
+* Are Plugins that Terraform uses to manage resources.
 
 [Browse Terraform Providers](https://registry.terraform.io/browse/providers)
 
