@@ -3,7 +3,7 @@ Options:
 1. **Hardcode credentials**  (NOT recommended)  
 In main.tf under the provider section hardcode the API **keys and secrets**. 
    
-1. Set environment variables  (Highly discorraged)  
+2. Set environment variables  (Highly discorraged)  
    
    E.g. AWS authentication  
 
@@ -25,7 +25,7 @@ In main.tf under the provider section hardcode the API **keys and secrets**.
    ```
    NOTE: While setting credentials in environment variables works, it's **highly discouraged**.
 
-2. **Credentials File:**
+3. **Credentials File** (Recomended)  
    This is highly secure alternatives to manage your Terraform credentials:
 
    - Create a file named `credentials` (no extension) in:
