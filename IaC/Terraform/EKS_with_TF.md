@@ -14,15 +14,19 @@ Manual EKS cluster provisioning drawbacks:
 Most efficiente way for creation and management EKS cluster.
 
 Steps:
-* Create VPC module
-  - Enable nat gateway
-  - Enable single nat gateway
-  - Enable dns hostnames
-  - Set tags to help Control Plane process like CCM (cloud control manager) to know what vpc, subnets (resources) belong to the cluster.
-  AWS VPC Terraform module in Terraform Registry.
-* Create subnets
-  1 private and 1 public pero availability zone.
-  E.g. us-east-2 has 3 az, there 6 subnets.
-  Private subnets for Workload.
-  Public subnets for external resources like loadbalancer.
-* 
+1. Create VPC module
+      - Enable nat gateway
+      - Enable single nat gateway
+      - Enable dns hostnames
+      - Set tags to help Control Plane process like CCM (cloud control manager) to know what vpc, subnets (resources) belong to the cluster.
+     AWS VPC Terraform module in Terraform Registry.
+  * Create subnets
+     1 private and 1 public per availability zone.
+     E.g. us-east-2 has 3 az, there 6 subnets.
+     Private subnets for Workload.
+     Public subnets for external resources like loadbalancer.* 
+
+You'll have hight
+
+EKS Cluster creation
+- Control Plane
