@@ -9,10 +9,16 @@
           * Cloud Agnostic: Terraform, Pulumi
   
 
-
+GRAL TERRAFORM USAGE PROCEDURE
 
 * Setup Terraform 
   * Install, setup auth
 * Connect TF to Platforms 
   * Use TF Providers
 * Create resources
+  * Create VPC resource
+    * Cidr block
+* Create subnet
+  * vpc id
+  * cidr block
+  * az
