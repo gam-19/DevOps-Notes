@@ -145,13 +145,12 @@ b) Queryng/Check detailed resources state easely
     Has subcommands to see detailed state of terraform.  
     
     
-    To list resources in the state file.
+    To list all resources in the state file:
     ```bash
         terraform state list
     ```
     
-
-    Show all resources attributes
+    Show all attributes specific resource:
     ```bash    
         terraform state show <resource_type.resource_name>
         terraform state show aws_subnet.dev-subnet-1
