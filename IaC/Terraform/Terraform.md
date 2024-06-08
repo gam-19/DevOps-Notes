@@ -108,6 +108,10 @@ Also shows provider's list of **available resources names**.
 - `terraform apply` = will go and deploy the resources defined in our code.
 - `terraform apply -auto-approve` = apply configuration without confirming.
 
+```bash
+  terraform apply -var-fle <terraform-dev.tfvars>
+```
+Apply config file using specific variable files.
 
 ### Deleting resources
 Option 1: Just remove resource from config file.  
