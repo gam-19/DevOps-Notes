@@ -105,13 +105,23 @@ Add this portion to the config file.
 - `terraform init` = get your project folder ready with providers
 - `terraform plan` = show what is going to be created, and changed during the next command based on our code.
 Also shows provider's list of **available resources names**.  
-- `terraform apply` = will go and deploy the resources defined in our code.
-- `terraform apply -auto-approve` = apply configuration without confirming.
 
+### Deploying resources
+Deploy resources defined in our code.
+```bash
+  terraform apply
+```
+
+Deploy configuration file without asking for confirmation.
+```bash
+  terraform apply -auto-approve
+```
+
+Deploy config file using specific variable files.
 ```bash
   terraform apply -var-fle <terraform-dev.tfvars>
 ```
-Apply config file using specific variable files.
+
 
 ### Deleting resources
 Option 1: Just remove resource from config file.  
