@@ -1,4 +1,11 @@
 
+
+### Set up AWS credentials
+```bash
+aws configure
+```
+
+
 Show configuration values AWS CLI is using to interact with AWS account and services.
 
 ```bash
