@@ -20,5 +20,6 @@ GRAL TERRAFORM USAGE PROCEDURE
     * Cidr block
 * Create subnet
   * vpc id
-  * cidr block
+  * cidr block  
+    Subnet ip range should inside vpc cidr blocks but not overlap with other subnet cird blocks.
   * az
