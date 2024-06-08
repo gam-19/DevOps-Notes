@@ -142,6 +142,13 @@ b) Queryng/Check detailed resources state easely
     ```bash
         terraform state
     ```
+    Has subcommands to see detailed state of terraform.
+
+    ```bash
+        terraform state list
+    ```
+    Listo resources in the state.
+
     Show all resources attributes
     ```bash    
         terraform state show <resource_type.resource_name>
