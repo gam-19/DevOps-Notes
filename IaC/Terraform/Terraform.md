@@ -108,10 +108,10 @@ Also shows provider's list of **available resources names**.
 
 
 ### Deleting resources
-Option 1:
-Just remove resource from config file, and 'terraform apply' again. This way your config file will match current state of your infra. Best practice specially if working in team.
+Option 1: Just remove resource from config file.  
+And 'terraform apply' again. This way your config file will match current state of your infra. Best practice specially if working in team.
 
-1. Delete specific resource
+Option 2: Delete specific resource
 ```
   terraform destroy -target aws_subnet.dev-subnet-2
 ```
