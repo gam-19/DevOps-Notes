@@ -43,6 +43,15 @@
 
 ### Data Sources
 * To query information, attributes, data about an existing resource  
+  
+E.g. 2: Querying aws default vpc data
+
+![alt text](/IaC/Terraform/_terra-images/TF_using_Data.png)
+
+**Result of query** is exported under given name "data.aws_vpc.exing.vpc"  
+"default=true" filters which vpc we querying.
+
+E.g. 2: Querying aws latest amazon image  
 
 ![alt text](/IaC/Terraform/_terra-images/TF_datasource.png)  
 Note: As in resources you preoviously need to specify the provider. Eg. provider "aws"
