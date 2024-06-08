@@ -127,7 +127,16 @@ Note: Good thing, you don't have to know in which **order** you need **to delete
 
 
 ## 9. TShoot Terraform  
-#### Queryng/Check detailed resources state easely  
+
+### Check current state of resources/infra
+
+a) Check if there is something to create or delete.
+
+```
+  terraform plan
+```
+
+b) Queryng/Check detailed resources state easely  
 - Check **terrafrom.tfstate**, stores the current state inside this JSON file, it has the current list of resources and their current state.  
 - State cmd
     ```bash
