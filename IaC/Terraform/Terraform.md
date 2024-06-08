@@ -120,7 +120,7 @@ Option 3:
 ```
   terraform destroy
 ```
-Will destroy all  resources we have created in our project.  
+Will destroy all  resources in our current config file.  
 Note: Good thing, you don't have to know in which **order** you need **to delete the resources**.
 
 
