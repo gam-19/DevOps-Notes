@@ -105,11 +105,26 @@ Add this portion to the config file.
 Also shows provider's list of **available resources names**.  
 - `terraform apply` = will go and deploy the resources defined in our code.
 - `terraform apply -auto-approve` = apply configuration without confirming.
-- `terraform destroy` = will destroy the resources we have created in our project  
-- `terraform destroy` = will destroy the resources we have created in our project.
+
+
+### Deleting resources
+Option 1:
+Just remove resource from config file, and apply config again. This way your config file will match current state of your infra.
+
+2. Delete specific resource
+```
+  terraform destroy -target aws_subnet.dev-subnet-2
+```
+
+Option 3:
+```
+  terraform destroy
+```
+Will destroy all  resources we have created in our project.  
 Note: Good thing, you don't have to know in which **order** you need **to delete the resources**.
-- `terraform destroy` = will destroy the resources we have created in our project  
-Note: Good thing, you don't have to know in which **order** you need **to delete the resources**.
+
+
+
 
 ## 9. TShoot Terraform  
 #### Queryng/Check detailed resources state easely  
