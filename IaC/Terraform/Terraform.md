@@ -27,6 +27,8 @@
 ![alt text](/IaC/Terraform/_terra-images/TF_Arch.png)  
 
 ### Configuration file
+Terraform code is written in HashiCorp Configuration Language (HCL), and it is typically stored in files with a .tf extension. HCL is a human-readable language, designed to be easy to read and write. It's not YAML or JSON, but it does have some similarities.
+
 * Define the resources in human-readable **configuratin file** that you can *version*, *re-use*, and *share.*
 * Definition configuration file is **declarative**.  
   - Declarative: defines **WHAT** the end result or desired state is.  
@@ -138,14 +140,14 @@ a) Check if there is something to create or delete.
 
 b) Queryng/Check detailed resources state easely  
 - Check **terrafrom.tfstate**, stores the current state inside this JSON file, it has the current list of resources and their current state.  
-- State cmd
+
     ```bash
         terraform state
     ```
     Has subcommands to see detailed state of terraform.  
     
     
-    To list all resources in the state file:
+    List all resources in the state file:
     ```bash
         terraform state list
     ```
