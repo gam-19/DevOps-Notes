@@ -34,8 +34,7 @@
  * IT / Cloud providers allow creating/managing their resources through GUI console and CLI or API, the last one being faster. 
 ![](./_terra-images/How_TF_works.png) 
   
-### Providers  
-[Providers](/IaC/Terraform/TF_providers.md)
+### [Providers](/IaC/Terraform/TF_providers.md)
 
 ### Resources
 * To create a new resource.  
@@ -43,7 +42,7 @@
 ![alt text](/IaC/Terraform/_terra-images/TF_resource.png)
 
 ### Data Sources
-* To query an existing resource  
+* To query information, attributes, data about an existing resource  
 
 ![alt text](/IaC/Terraform/_terra-images/TF_datasource.png)  
 Note: As in resources you preoviously need to specify the provider. Eg. provider "aws"
