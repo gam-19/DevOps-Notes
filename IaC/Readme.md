@@ -7,3 +7,12 @@
        - Provisitioning tools:  
           * Cloud specific: AWS Cloud Formation, Azure Resource Manager, Google Cloud Deployment Manager.
           * Cloud Agnostic: Terraform, Pulumi
+  
+
+
+
+* Setup Terraform 
+  * Install, setup auth
+* Connect TF to Platforms 
+  * Use TF Providers
+* Create resources
