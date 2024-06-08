@@ -109,7 +109,7 @@ Also shows provider's list of **available resources names**.
 
 ### Deleting resources
 Option 1:
-Just remove resource from config file, and 'terraform apply' again. This way your config file will match current state of your infra.
+Just remove resource from config file, and 'terraform apply' again. This way your config file will match current state of your infra. Best practice specially if working in team.
 
 1. Delete specific resource
 ```
