@@ -3,7 +3,8 @@
     In one AZ
 3. Connect VPC to Internet  
    Allow traffic in/out
-   * Create **Route Table**
+   * Create **Route Table**  
+   It's like a virtual Router in the VPC
    * Create **Internet Gateway**
 4. Provision **EC2 Instance**
 5. Deploy nginx Docker container
