@@ -1,5 +1,4 @@
-### Firewall
-
+### Network Security Firewall
 
 1. **Stateless Firewalls**: 
    * Filter packets without regard to the context of the traffic. 
@@ -12,6 +11,12 @@
    * Only packets matching a known active connection are allowed by the firewall; others are rejected.
    * This makes them effective in protecting against certain types of attacks, such as spoofing attacks.   
 
-3. Next-Generation Firewalls (NGFWs): These are more advanced firewalls that do everything a stateful firewall does, but also include additional features like intrusion prevention, SSL and SSH inspection, deep-packet inspection, and reputation-based malware detection.
+3. **Next-Generation Firewalls (NGFWs)**: 
+   * More advanced firewalls that do everything a stateful firewall does, but also include additional features like:
+     * IPS (intrusion prevention)
+     * SSL and SSH inspection
+     * Deep-packet inspection
+     * Reputation-based malware detection.
 
-4. Web Application Firewalls (WAFs): These are firewalls specifically designed to protect web applications from attacks such as SQL injection, cross-site scripting (XSS), and file inclusion.
+4. **Web Application Firewalls (WAFs)**: 
+   * Specifically designed to protect web applications from attacks such as SQL injection, cross-site scripting (XSS), and file inclusion.
