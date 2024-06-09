@@ -121,6 +121,7 @@ HCL - Terraform
     }
 
     Using existing default segurity group
+        
     ```HCL
     resource "aws_default_security_group" "default-sg" {
         vpc_id = aws_vpc.myapp-vpc.id
