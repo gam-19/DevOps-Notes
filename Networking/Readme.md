@@ -10,9 +10,7 @@
    * Keeps track of the state of network connections (such as TCP streams, UDP communication) traveling across it. 
    * Capable of monitoring all sessions (traffic) and determine whether packets are part of an existing connection, a new connection, or not part of any connection. 
    * Only packets matching a known active connection are allowed by the firewall; others are rejected.
-   * This makes them effective in protecting against certain types of attacks, such as spoofing attacks.
-   * Programmed to distinguish legitimate packets, 
-   * 
+   * This makes them effective in protecting against certain types of attacks, such as spoofing attacks.   
 
 3. Next-Generation Firewalls (NGFWs): These are more advanced firewalls that do everything a stateful firewall does, but also include additional features like intrusion prevention, SSL and SSH inspection, deep-packet inspection, and reputation-based malware detection.
 
