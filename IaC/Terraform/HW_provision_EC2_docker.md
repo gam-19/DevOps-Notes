@@ -8,5 +8,6 @@
 4. Provision **EC2 Instance**
 5. Deploy nginx Docker container
 6. Create **Security Group** (Firewall)
-   Allow access to web server from Internet.
+   * Allow access to web server from Internet.
+   * Allow SSH connecting for mgmt.
 7. asdfsaf
