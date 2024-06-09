@@ -14,5 +14,5 @@
 7. asdfsaf
 
 Notes:  
-Security Group: Firewall at server level.
-NACL (Network access list): Firewall at subnet level.
+**Security Group**: Firewall at server level.  
+**NACL (Network access list)**: Firewall at subnet level.

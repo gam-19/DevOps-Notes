@@ -23,3 +23,8 @@ GRAL TERRAFORM USAGE PROCEDURE
   * cidr block  
     Subnet ip range should inside vpc cidr blocks but not overlap with other subnet cird blocks.
   * az
+
+
+TERRAFORM BEST PRACTICES
+* Create Infrastructure **from scratch**.
+* **Leave the default** created by AWS as is.
