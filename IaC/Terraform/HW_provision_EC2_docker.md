@@ -81,10 +81,9 @@ HCL - Terraform
         }
         tags = {
             Name: "${var.env_prefix}-main-rtb"
-        }    
-}
-
-     # Subnet assouciatin to route table happens automatically, no need to specify.    
+        }
+    }
+    # Subnet assouciatin to route table happens automatically, no need to specify.    
     ```
 
 4. Provision **EC2 Instance**
