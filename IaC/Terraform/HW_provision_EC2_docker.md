@@ -12,3 +12,7 @@
    * Allow access to web server from Internet.
    * Allow SSH connecting for mgmt.
 7. asdfsaf
+
+Notes:  
+Security Group: Firewall at server level.
+NACL (Network access list): Firewall at subnet level.
