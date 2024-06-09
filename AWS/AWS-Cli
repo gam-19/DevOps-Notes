@@ -6,6 +6,8 @@
 aws configure
 ```
 
+![alt text](/AWS/_assets/aws_creds_setup_cli.png)
+
 
 Show configuration values AWS CLI is using to interact with AWS account and services.
 
