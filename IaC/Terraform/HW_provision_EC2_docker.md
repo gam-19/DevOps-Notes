@@ -152,6 +152,12 @@ HCL - Terraform
     ```
 
 5. Provision **EC2 Instance**
+   * Define ami image
+   * Instance type
+   * In which Subnet will be deployed
+   * In which VPC
+   * In which Availability Zone
+   * Asociate Public IP
 6. Deploy nginx Docker container   
 7. asdfsaf
 
