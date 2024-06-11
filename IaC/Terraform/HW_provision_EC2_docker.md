@@ -158,6 +158,10 @@ HCL - Terraform
    * In which VPC
    * In which Availability Zone
    * Asociate Public IP
+   * Create access keys and associate key name with EC2 instance
+    You also have to download the private key .pem to yoour computer so you can ssh the EC2 instnace.
+   * Asign Tag
+   
 6. Deploy nginx Docker container   
 7. asdfsaf
 
