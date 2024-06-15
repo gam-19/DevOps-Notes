@@ -7,7 +7,7 @@ Without modules, complex configurations in a huge file with no overview.
 
 Modulos allows:  
 * Organize and group configurations.
-* Encapsulate into distinct logical components.
+* Encapsulate into logical components.
 * Reusage
 * Expose created resources and their specific attributes.  
     - E.g 1. Module for AWS EC2 instance, with its configurations around it: Key pair, security group, volumes, aws ami, etc.   
@@ -30,7 +30,7 @@ Creating custom module
 * Creates main.tf, output.tf and variables.tf
 * Write the code in main.tf
 * Define all variables.tf required in variables.tf
-* Use output.tf as needed.
+* Use output.tf as needed.  
 Using module in root main.tf file  
 ```bash
     module "myapp-subnet" {
@@ -44,3 +44,4 @@ Using module in root main.tf file
     }
 ```
 Reference all variables required by the module, make sure variables value are in terraform.tfvars file or you can hardcode when calling th module.
+
