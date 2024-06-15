@@ -160,9 +160,10 @@ HCL - Terraform
    * Asociate Public IP
    * Create access keys and associate key name with EC2 instance
     You also have to download the private key .pem to yoour computer so you can ssh the EC2 instnace.
+    Or you can also automate key pair creation:
 
     ```bash
-        # Inside main.tf
+    # In main.tf
         
         # Key pair path variable
         variable public_key_location {}
@@ -192,8 +193,8 @@ HCL - Terraform
             }
     }
 
-    # Inside terraform.tfvars file
-        # Variable value, path to public key created in advance.
+    # In terraform.tfvars file
+        # Path to public key created in advance.
         public_key_location = "C:\\Users\\gam\\.ssh\\id_rsa.pub"
     ```
 
