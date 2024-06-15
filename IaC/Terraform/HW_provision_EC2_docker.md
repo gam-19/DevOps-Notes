@@ -160,6 +160,39 @@ HCL - Terraform
    * Asociate Public IP
    * Create access keys and associate key name with EC2 instance
     You also have to download the private key .pem to yoour computer so you can ssh the EC2 instnace.
+
+    ```bash
+        # Inside main.tf
+        
+        # Create key pair resource
+        resource "aws_key_pair" "ssh-key" {
+            key_name = "server-key"
+            public_key = file(var.public_key_location)
+        }
+        
+        resource "aws_instance" "myapp-server" {
+            ami = data.aws_ami.latest-amazon-linux-image.id
+            instance_type = "t2.micro"
+            
+            subnet_id = aws_subnet.myapp-subnet-1.id            
+            vpc_security_group_ids = [aws_default_security_group.default-sg.id]
+            availability_zone = var.avail_zone
+            
+            associate_public_ip_address = true
+            
+            # Reference key pair resource
+            key_name = aws_key_pair.ssh-key.key_name
+
+            tags = {
+                Name = "${var.env_prefix}-server"
+            }
+    }
+
+
+    ```
+
+
+
    * Asign Tag
 
 6. Deploy nginx Docker container   
