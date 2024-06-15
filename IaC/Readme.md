@@ -28,4 +28,7 @@ GRAL TERRAFORM USAGE PROCEDURE
 TERRAFORM BEST PRACTICES
 * Create Infrastructure **from scratch**.
 * **Leave the default** created by AWS as is.
-* Modularize TF config file if there are a lot of resources, into isolated **modules**
+* Modularize TF config file if there are a lot of resources, into isolated **modules**  
+  You should know: 
+  * How to write a module
+  * How to use/reference a module
