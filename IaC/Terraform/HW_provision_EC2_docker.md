@@ -204,6 +204,7 @@ HCL - Terraform
     ```bash
         resource "aws_instance" "myapp-server" {
             #!!! Other code
+            # Using 'user_data' aws provider attribute to run script after EC2 creation
             user_data = <<EOF
                             #!/bin/bash
                             sudo yum update -y && sudo yum install -y docker
@@ -211,6 +212,7 @@ HCL - Terraform
                             sudo usermod -aG docker ec2-user
                             docker run -p 8080:80 nginx
                         EOF
+            # Option to run again the script, only if there is change of the script itself.
             user_data_replace_on_change = true
             
             tags = {
@@ -219,7 +221,6 @@ HCL - Terraform
         }
     ```
 
-7. asdfsaf
 
 Notes:  
 **Security Group**: Firewall at server level.  
