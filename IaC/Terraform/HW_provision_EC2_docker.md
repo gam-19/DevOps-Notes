@@ -199,8 +199,8 @@ HCL - Terraform
     ```
     * Asign Tag
 
-6. Deploy nginx Docker container   
-   
+6. Deploy nginx Docker container  
+   Option 1
     ```bash
         resource "aws_instance" "myapp-server" {
             #!!! Other code
@@ -220,7 +220,19 @@ HCL - Terraform
             }
         }
     ```
+    Option 2:
+    ```bash
+        resource "aws_instance" "myapp-server" {
+            
+            # Using 'user_data' to reference a script file
+            user_data = file("entry-script.sh")
+            # Create a script file with that name in terraform directory, and place script commands inside
 
+            tags = {
+                Name = "${var.env_prefix}-server"
+            }
+        }
+    ```
 
 Notes:  
 **Security Group**: Firewall at server level.  
