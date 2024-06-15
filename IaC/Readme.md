@@ -28,7 +28,8 @@ GRAL TERRAFORM USAGE PROCEDURE
 TERRAFORM BEST PRACTICES
 * Create Infrastructure **from scratch**.
 * **Leave the default** created by AWS as is.
-* Modularize TF config file if there are a lot of resources, into isolated **modules**  
+* Modularize TF config file
+If there is a complex configuration with too many resources, huge config file, lack of config overview, is best practice to **modularize**  
   ![alt text](/IaC/Terraform/_terra-images/TF_bp_modules.png)
   You should know: 
   * How to write a module
