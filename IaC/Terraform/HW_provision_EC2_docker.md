@@ -62,7 +62,7 @@ HCL - Terraform
         route_table_id = aws_route_table.myapp-route-table.id
     }
     ```
-    Using default Route table   
+    Using default Route table instead  
     ```HCL
     HCL - Terraform
     
