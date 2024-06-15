@@ -164,9 +164,13 @@ HCL - Terraform
     ```bash
         # Inside main.tf
         
+        # Key pair path variable
+        variable public_key_location {}
+
         # Create key pair resource
         resource "aws_key_pair" "ssh-key" {
             key_name = "server-key"
+            # reference to public key file path
             public_key = file(var.public_key_location)
         }
         
@@ -188,7 +192,9 @@ HCL - Terraform
             }
     }
 
-
+    # Inside terraform.tfvars file
+        # Variable value, path to public key created in advance.
+        public_key_location = "C:\\Users\\gam\\.ssh\\id_rsa.pub"
     ```
 
 
