@@ -27,8 +27,8 @@ Good practice for dividing modules files:
 Steps:  
 Creating custom module
 * Create "Modules" dir in root.
-* Create dir for each module. E.g. Subnet, web-server  
-* Creates main.tf, output.tf and variables.tf
+* Create dir for each module. E.g. Subnet, web-server.  
+* Creates main.tf, output.tf and variables.tf in each module
 * Write the code in main.tf
 * Define all variables.tf required in variables.tf
 * Use output.tf as needed.  

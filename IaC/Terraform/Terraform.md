@@ -46,7 +46,7 @@ Terraform code is written in HashiCorp Configuration Language (HCL), and it is t
 ### Data Sources
 * To query information, attributes, data about an existing resource  
   
-E.g. 2: Querying aws default vpc data
+E.g. 1: Querying aws default vpc data
 
 ![alt text](/IaC/Terraform/_terra-images/TF_using_Data.png)
 

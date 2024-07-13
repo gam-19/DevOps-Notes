@@ -1,0 +1,1 @@
+NodePort Service port range: 30000 - 32767
