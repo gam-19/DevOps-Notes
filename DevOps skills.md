@@ -44,4 +44,15 @@ GAM To DO:
 * Dominar docker y docker compose.
   - Poder hacer docker/compose files solito.
 * Volver a setear Jenkins de cero y configurar CI/CD de cero solito.
-* 
+
+
+Operation Engineer, System Admins, and Security Specialists usually don't participate in Agile team. 
+
+
+DevOps
+* Increase deployment frequency
+* Lower failure rate for new releases.
+* Quicker mean time to recovery in the event of a new release crashing the application
+* Shortened lead time between fixes.
+* DevOps increases organizations’ capability to deliver high-quality solutions at a swift pace.
+* It automates all processes starting from build to deployment of an application or a product.

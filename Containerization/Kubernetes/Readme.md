@@ -5,10 +5,12 @@ Opensource container orchestration tool
 ### Introduction / context / Why to use K8s
 
   - Currently containerized applications are the prefered way to release apps.
-  - Apps can have multiple containers, even more, hundreds of containers.
-  - Trend from Monolith to Microservices, resulted in an increased usage of containers.
-    - Containers are the perfect host for microservice apps.
+  - Apps can have multiple containers, hundreds of containers.
   - Manually managing hundreds or hundreds of 1000s containers is a lot of effort.
+  - Trend from Monolith to **Microservices**, resulted in an increased usage of containers.
+    - Containers are the perfect host for **microservice** apps.
+  
+  ![alt text](/Containerization/Kubernetes/_K8s-assets/MonolitthToMicroservices.png)
 
 ### BENEFITS  
 * K8s Automates many processes involved in deploying, managing and scaling containerized apps.
@@ -21,9 +23,31 @@ Opensource container orchestration tool
 
 ### HOW TO USE IT
 ### Components
+Kubernetes has many components, **main ones**:
+
+![alt text](/Containerization/Kubernetes/_K8s-assets/K8s_compon_1.png)
+
+Pod: 
+- 1 or more containers.
+- Abstraction over container.
+- Usually 1 application/container per Pod.
+- Pods are ephemeral, new IP address is assigned on re-creation.
+
+Service:
+- Static/permanent IP address that can be attached to each Pod.
+- Loadbalancer
+- **Lifecicles** of Pods and Services are **not connected**. If Pod crashes, the Service and its IP addr will be the same.
+
+  - Internal vs External Service vs Ingress
+    - **Internal service**: By default, for example a database, which should not be accessible for outside.
+    - **External service**: Application accessible thourhg browser.
+    - 
+
+
+
 Kubernetees cluster consists of machines called "Nodes"
 
-Worker Nodes (servers)  
+##### Worker Nodes (servers)  
        
       * Run the containerized applications.
       * Each Node can run multiple Pods
@@ -41,7 +65,7 @@ Worker Nodes (servers)
                 * Network proxy, intelligent forwarding of requests to Pods.
 
 
-Control Plane Nodes
+##### Control Plane Nodes
 * **Manages** the Work Nodes and the Pods in the cluster.
 * Much more important and needs to be replicated.  
             How they work  
@@ -52,11 +76,10 @@ Control Plane Nodes
               * d) Etcd  
 
 You can run K8s cluster On-Premises or in the cloud.  
-On-prem > Minikube  
-
+On-prem > Minikube
 * We need to install K8 client: Cli or Gui
-* K8 client CLI: Kubectl
-* We can create cluster, pods, replicasets, services manually.
+  - K8 client CLI > Kubectl
+* We can create cluster, pods, replicasets, services manually with Kubectl.
 * Or we can use Yaml files to CRUD K8 resources.
 
 Cloud > Linode, AWS, Azure
