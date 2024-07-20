@@ -4,7 +4,7 @@
 * An open-source infrastructure as code (IaC) tool.
 * "Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently" - Hashicorp.
 * Infrastructure provisioning-focused tool.  
-* Let's you **automate and manage**: infrastructure, platform and services running on that platform.  
+* Let's you **automate and manage**: infrastructure (Ej. aws, zure), platform (Ej. K8s) and services (Ej. fastly) running on that platform.  
 
 ## 2. Why to use  
 * Allows us to apply software development best practices to infrastructure development. E.g. Version control, code reviews, etc.
@@ -12,16 +12,18 @@
 * Allow us to **Automate** continuous changes to our infra.
 * Allow us to easy **replicate** infra **on different environments**, like Dev, Staging, Prod.
 
-## 3. How it works  
+## 3. Use cases  
 * Terraform + Ansible (config mgmt)  
   ![alt text](/IaC/Terraform/_terra-images/image-2.png)
   TF provisions VMs > Ansible installs all necessary dependencies.
+
 * Terraform + Templating Tools  
   ![alt text](/IaC/Terraform/_terra-images/image-1.png) 
   TF provisions servers and Server templating, e.g. Packer from Hashicorp, is used to build the image from which those VMs are created. All dependences are pre-packaged into the machine image.
+
 * Terraform + Kubernetes 
     ![alt text](/IaC/Terraform/_terra-images/image.png)
-  TF defines cloud resources and K8s to define how our application is deployed and managed on those cloud resources.
+  TF defines cloud resources and K8s define how our application is deployed and managed on those cloud resources.
 
 ### Terraform Architecture
 ![alt text](/IaC/Terraform/_terra-images/TF_Arch.png)  
@@ -33,7 +35,10 @@ Terraform code is written in HashiCorp Configuration Language (HCL), and it is t
 * Definition configuration file is **declarative**.  
   - Declarative: defines **WHAT** the end result or desired state is.  
   - Imperative: defines the exact steps to follow - **HOW**.
- * IT / Cloud providers allow creating/managing their resources through GUI console and CLI or API, the last one being faster. 
+
+### HOW IT WORKS
+ * IT / Cloud providers allow creating/managing their resources through GUI console, CLI and or API, the lastest one being faster. 
+  
 ![](./_terra-images/How_TF_works.png) 
   
 ### [Providers](/IaC/Terraform/TF_providers.md)

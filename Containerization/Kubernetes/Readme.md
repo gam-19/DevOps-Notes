@@ -27,9 +27,12 @@ Kubernetes has many components, **main ones**:
 
 ![alt text](/Containerization/Kubernetes/_K8s-assets/K8s_compon_1.png)
 
+Node: 
+- Kubernetees cluster consists of machines called "Nodes", virtual or physical.
+
 Pod: 
 - 1 or more containers.
-- Abstraction over container.
+- Abstraction over container running in Nodes.
 - Usually 1 application/container per Pod.
 - Pods are ephemeral, new IP address is assigned on re-creation.
 
@@ -68,12 +71,21 @@ Kubernetees cluster consists of machines called "Nodes"
 ##### Control Plane Nodes
 * **Manages** the Work Nodes and the Pods in the cluster.
 * Much more important and needs to be replicated.  
-            How they work  
-              Control Plane need 4 processes installed  
-              * a) API Server  
-              * b) Scheduler  
-              * c) Controller Manager  
+Control Plane need 4 processes installed"  
+            * a) API Server  
+                  * Cluster gateway, single entrypoint to the cluster.  
+                  * Acts as gatekeeper for authentication, validating  requests.  
+                  * Clients interact with API server UI, API or CLI.
+            * b) Scheduler  
+                  * **Decides** on which Node new Pod should be scheduled.   
+                  * Factors taken into account for scheduling decisions: resource requirements, hardware/software/policy constraints, data locality, etc.  
+            * c) Controller Manager  
+                  - Detects state changes, like crashing pods and tries to recover the cluste state asap.  
+                  - For that **makes requests to the Scheduler** to rescheule those Pods.  
               * d) Etcd  
+                  - K8s backing storte for all cluster data. A consistent, high-availble key-value sotre.  
+                  - Cluster brain, every change in the cluster gets saved or updated into it.  
+                  - **All other processes** like Scheduler, Controller Manager, etc **work based on the data in etcd.**  
 
 You can run K8s cluster On-Premises or in the cloud.  
 On-prem > Minikube
