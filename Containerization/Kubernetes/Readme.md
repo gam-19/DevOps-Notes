@@ -50,7 +50,7 @@ Service:
 
 Kubernetees cluster consists of machines called "Nodes"
 
-##### Worker Nodes (servers)  
+#### Worker Nodes (servers)  
        
       * Run the containerized applications.
       * Each Node can run multiple Pods
@@ -68,21 +68,21 @@ Kubernetees cluster consists of machines called "Nodes"
                 * Network proxy, intelligent forwarding of requests to Pods.
 
 
-##### Control Plane Nodes
+#### Control Plane Nodes
 * **Manages** the Work Nodes and the Pods in the cluster.
 * Much more important and needs to be replicated.  
 Control Plane need 4 processes installed"  
-            * a) API Server  
+            a) API Server  
                   * Cluster gateway, single entrypoint to the cluster.  
                   * Acts as gatekeeper for authentication, validating  requests.  
                   * Clients interact with API server UI, API or CLI.
-            * b) Scheduler  
+            b) Scheduler  
                   * **Decides** on which Node new Pod should be scheduled.   
                   * Factors taken into account for scheduling decisions: resource requirements, hardware/software/policy constraints, data locality, etc.  
-            * c) Controller Manager  
+            c) Controller Manager  
                   - Detects state changes, like crashing pods and tries to recover the cluste state asap.  
                   - For that **makes requests to the Scheduler** to rescheule those Pods.  
-              * d) Etcd  
+            d) Etcd  
                   - K8s backing storte for all cluster data. A consistent, high-availble key-value sotre.  
                   - Cluster brain, every change in the cluster gets saved or updated into it.  
                   - **All other processes** like Scheduler, Controller Manager, etc **work based on the data in etcd.**  
@@ -94,7 +94,7 @@ On-prem > Minikube
 * We can create cluster, pods, replicasets, services manually with Kubectl.
 * Or we can use Yaml files to CRUD K8 resources.
 
-Cloud > Linode, AWS, Azure
+## Cloud > Linode, AWS, Azure
 
 
 

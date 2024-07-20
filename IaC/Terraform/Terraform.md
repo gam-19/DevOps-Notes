@@ -90,8 +90,9 @@ Note: As in resources you preoviously need to specify the provider. Eg. provider
   
 ### 3. Removing / Destroying Resources
 Option 1: Just remove the resource code from within config file, and apply again.  
-Note: This is **recommended** because your config file will correspond  your current state.
-OPtion 2:  Destroy command:  
+Note: This is **recommended** because your config file will correspond  your current state.  
+
+Option 2:  Destroy command:  
 terraform destroy -target [resource type.resource name]  
 E.g.
 ```bash
@@ -157,7 +158,7 @@ a) Check if there is something to create or delete.
   terraform plan
 ```
 
-b) Queryng/Check detailed resources state easely  
+b) Query/Check detailed resources state easely  
 - Check **terrafrom.tfstate**, stores the current state inside this JSON file, it has the current list of resources and their current state.  
 
     ```bash
