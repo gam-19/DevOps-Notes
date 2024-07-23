@@ -17,3 +17,11 @@ Show configuration values AWS CLI is using to interact with AWS account and serv
 ```bash
 aws configure list
 ```
+```bash
+aws configure
+aws aws sts get-caller-identity
+```
+
+
+
+

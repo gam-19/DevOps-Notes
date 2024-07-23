@@ -77,10 +77,16 @@ Note: As in resources you preoviously need to specify the provider. Eg. provider
 
     ![alt text](/IaC/Terraform/_terra-images/TF_variables.png)
 
-    3 Steps to set variable values
+    3 ways to set variable values
     ![alt text](/IaC/Terraform/_terra-images/TF_var_values.png)
     Note: Every environment could have its own var file. E.g. terraform-dev.tfvars, terraform-staging.tfvars, terraform-prod.tfvars. 
 
+    You can pass variable files at the moment of applying config.
+    ```bash
+    terraform apply -var-file terraform-dev.tfvars
+    ```
+    * You can set default values for variables in case a tfvars file is not passed.
+    * You can set variable type to inforce it, for users to provide specific type of data.   
 ### Environmental Variables
 * TF-Env Var: TF has env vars, you can use them to change TF's default hehaviour, e.g. TF Logs:
   ```Bash
@@ -107,48 +113,9 @@ Add this portion to the config file.
     }
 ```
 
-## 8. TF Core cmds  
-- `terraform init` = get your project folder ready with providers
-- `terraform plan` = show what is going to be created, and changed during the next command based on our code.
-Also shows provider's list of **available resources names**.  
+## [8. TF Core cmds](/IaC/Terraform/TF_commands.md)  
 
-### Deploying resources
-Deploy resources defined in our code.
-```bash
-  terraform apply
-```
-
-Deploy configuration file without asking for confirmation.
-```bash
-  terraform apply -auto-approve
-```
-
-Deploy config file using specific variable files.
-```bash
-  terraform apply -var-fle <terraform-dev.tfvars>
-```
-
-
-### Deleting resources
-Option 1: Just remove resource from config file.  
-And 'terraform apply' again. This way your config file will match current state of your infra. Best practice specially if working in team.
-
-Option 2: Delete specific resource
-```
-  terraform destroy -target aws_subnet.dev-subnet-2
-```
-
-Option 3:
-```
-  terraform destroy
-```
-Will destroy all  resources in our current config file.  
-Note: Good thing, you don't have to know in which **order** you need **to delete the resources**.
-
-
-
-
-## 9. TShoot Terraform  
+## [9. TShoot Terraform](/IaC/Terraform/TF_TShooting.md)  
 
 ### Check current state of resources/infra
 
