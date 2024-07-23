@@ -91,7 +91,7 @@ HCL - Terraform
    * Allow SSH connecting for mgmt.
 
     Using custom segurity group
-    ```HCL
+```HCL
     resource "aws_security_group" "myapp-sg" {
         name = "myapp-sg"
         vpc_id = aws_vpc.myapp-vpc.id
@@ -119,10 +119,11 @@ HCL - Terraform
             Name = "${var.env_prefix}-sg"
         }   
     }
+```
 
-    Using existing default segurity group
+Using existing default segurity group
         
-    ```HCL
+```HCL
     resource "aws_default_security_group" "default-sg" {
         vpc_id = aws_vpc.myapp-vpc.id
 
@@ -149,7 +150,7 @@ HCL - Terraform
             Name = "${var.env_prefix}-default-sg"
         }   
     }
-    ```
+```
 
 5. Provision **EC2 Instance**
    * Define ami image
