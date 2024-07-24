@@ -1,8 +1,21 @@
-1. Create custom **VPC**
-2. Create custom **Subnet**  
+Oveview, steps:
+Create custom VPC
+Create custom Subnet
+Create Route Table & Internet Gateway
+Provision EC2 Instance
+Deploy nginx Docker container
+Create Security Group (Firewall)  
+
+
+
+
+
+
+1. Create custom **VPC**  
+2. Create custom **Subnet**    
     In one AZ
  ```HCL
-HCL - Terraform
+ # main.tf
 
     provider "aws" {
         region = "us-east-2"
@@ -29,6 +42,13 @@ HCL - Terraform
         }
     }
  ```
+ ```
+ #terraform.tfvars
+    vpc_cidr_block = "10.0.0.0/16"
+    subnet_cidr_block = "10.0.10.0/24"
+    avail_zone = "us-east-2b"
+    env_prefix = "dev"
+ ```
 3. Connect VPC to Internet  
    Using custom Route table to allow traffic in/out
    * Create **Route Table**  
@@ -37,8 +57,7 @@ HCL - Terraform
    * Associate subnet to internet gateway.
 
     ```HCL
-    HCL - Terraform
-
+    # Creating custom route table
     resource "aws_route_table" "myapp-route-table" {
         vpc_id = aws_vpc.myapp-vpc.id
         route {
@@ -63,9 +82,9 @@ HCL - Terraform
     }
     ```
     Using default Route table instead  
-    ```HCL
+    ```BASH
     HCL - Terraform
-    
+    # creating custom internet gateway
     resource "aws_internet_gateway" "myapp-igw" {
         vpc_id = aws_vpc.myapp-vpc.id
         tags = {
@@ -73,6 +92,7 @@ HCL - Terraform
         }
     }
 
+    # Using default route table
     resource "aws_default_route_table" "main-rtb" {
         default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id
         route {
@@ -83,15 +103,15 @@ HCL - Terraform
             Name: "${var.env_prefix}-main-rtb"
         }
     }
-    # Subnet assouciatin to route table happens automatically, no need to specify.    
+    # Subnet association to route table happens automatically, no need to specify.    
     ```
 
 4. Create **Security Group** (Firewall)
-   * Allow access to web server from Internet.
+   * Allow web access from Internet.
    * Allow SSH connecting for mgmt.
 
     Using custom segurity group
-```HCL
+```BASH
     resource "aws_security_group" "myapp-sg" {
         name = "myapp-sg"
         vpc_id = aws_vpc.myapp-vpc.id

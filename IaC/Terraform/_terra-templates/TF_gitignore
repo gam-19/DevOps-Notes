@@ -4,7 +4,7 @@
 *.tfplan
 
 # Ignore any .terraform directories
-**/.terraform/*
+.terraform/*
 
 # Ignore provider-specific files
 *.tfvars
