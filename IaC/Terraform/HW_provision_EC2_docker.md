@@ -281,11 +281,45 @@ Using existing default segurity group
             sudo usermod -aG docker ec2-user
             docker run -p 8080:80 nginx
     ```
-    Note: Op 1 and 2 script commands above are executed by AWS on virtual server.
+    Note: Op 1 and 2 script commands above are passed to AWS to execute them on virtual server.
 
     Option 3: 
-    Using Terraform provisioners to TF itself run cmds in virtual servers.
+    'remote-exec' connects via ssh using Terraform, and TF itself run cmds in virtual servers.
+    Provisioners are last resort, not recommended by Terraform.
     
+    ```bash
+    resource "aws_instance" "myapp-server" {
+        # other code...
+                
+        user_data_replace_on_change = true
+        
+        # Connection for 'remote-exec'
+        connection {
+            type = "ssh"
+            host = self.public_ip
+            user = "ec2-user"
+            private_key = file(var.private_key_location)
+        }
+
+        # Provisioner to copy script file to aws instance
+        provisioner "file" {
+            source = "entry-script.sh"
+            destination = "/home/ec2-user/entry-script.sh"
+        }
+
+        # Provisioner to execute script, file should already exist in ec2 instance
+        provisioner "remote-exec" {
+            inline = ["/home/ec2-user/entry-script.sh"]
+        }
+
+        tags = {
+            Name: "${var.env_prefix}-server"
+        }
+    }
+
+
+    ```
+
 
 Notes:  
 **Security Group**: Firewall at server level.  
