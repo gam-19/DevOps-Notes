@@ -56,3 +56,9 @@ DevOps
 * Shortened lead time between fixes.
 * DevOps increases organizations’ capability to deliver high-quality solutions at a swift pace.
 * It automates all processes starting from build to deployment of an application or a product.
+
+
+Infrastructure provisioning
+* Create AWS infrastrure (vpc, subnet, internet gateway, access keys)
+* Configure networking (routable, security group)
+* Provision server 

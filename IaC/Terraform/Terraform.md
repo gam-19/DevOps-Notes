@@ -36,6 +36,16 @@ Terraform code is written in HashiCorp Configuration Language (HCL), and it is t
   - Declarative: defines **WHAT** the end result or desired state is.  
   - Imperative: defines the exact steps to follow - **HOW**.
 
+Use Terraform to "Provision and **Manage Infrastructure**":
+* Initial Infrastructure Setup
+* Managa Infra
+* Initial Application Setup   
+
+Use Configuration Management Tools to "**Manage applications**":
+* Deploying apps
+* Configuring server
+* Installing / updating packages.
+
 ### HOW IT WORKS
  * IT / Cloud providers allow creating/managing their resources through GUI console, CLI and or API, the lastest one being faster. 
   

@@ -143,7 +143,7 @@ Create Security Group (Firewall)
 
 Using existing default segurity group
         
-```HCL
+```BASH
     resource "aws_default_security_group" "default-sg" {
         vpc_id = aws_vpc.myapp-vpc.id
 
@@ -178,17 +178,38 @@ Using existing default segurity group
    * In which Subnet will be deployed
    * In which VPC Security Group
    * In which Availability Zone
-   * Asociate Public IP
-   * Create access keys and associate key name with EC2 instance
-    You also have to download the private key .pem to yoour computer so you can ssh the EC2 instnace.
-    Or you can also automate key pair creation:
+   * Associate Public IP
+   * Create access keys
+     * a) Create access key on aws and associate key name with EC2 instance. You also have to download the private key .pem to yoour computer so you can ssh the EC2 instance.
+     * b) Or generate private and pub keys locally, point pub key for automated key pair creation.
+   * Install, run Docker container script.
 
     ```bash
     # In main.tf
         
-        # Key pair path variable
-        variable public_key_location {}
-
+        # Variables
+        variable "vpc_cidr_block" {}
+        variable "subnet_cidr_block" {}
+        variable "avail_zone" {}
+        variable "env_prefix" {}
+        variable "my_ip" {}
+        variable "instance_type" {}
+        variable "public_key_location" {}
+        
+        # Query latest Amazon Linux image
+        data "aws_ami" "latest-amazon-linux-image" {
+            most_recent = true
+            owners = ["amazon"]
+            filter {
+                name = "name"
+                values = ["amzn2-ami-kernel-*-x86_64-gp2"]
+            }
+            filter {
+                name = "virtualization-type"
+                values = ["hvm"]
+            }
+        }
+        
         # Create key pair resource
         resource "aws_key_pair" "ssh-key" {
             key_name = "server-key"
@@ -198,7 +219,7 @@ Using existing default segurity group
         
         resource "aws_instance" "myapp-server" {
             ami = data.aws_ami.latest-amazon-linux-image.id
-            instance_type = "t2.micro"
+            instance_type = var.instance_type
             
             subnet_id = aws_subnet.myapp-subnet-1.id            
             vpc_security_group_ids = [aws_default_security_group.default-sg.id]
@@ -223,17 +244,16 @@ Using existing default segurity group
 6. Deploy nginx Docker container  
    Option 1
     ```bash
-        resource "aws_instance" "myapp-server" {
-            #!!! Other code
-            # Using 'user_data' aws provider attribute to run script after EC2 creation
+        resource "aws_instance" "myapp-server" {            
+            # Using 'user_data' inside instance code, aws provider attribute to run script after EC2 creation  
             user_data = <<EOF
                             #!/bin/bash
-                            sudo yum update -y && sudo yum install -y docker
+                            sudo yum update -y && sudo yum install docker -y
                             sudo systemctl start docker
                             sudo usermod -aG docker ec2-user
                             docker run -p 8080:80 nginx
                         EOF
-            # Option to run again the script, only if there is change of the script itself.
+            #Run again the script only if there is change of the script itself.
             user_data_replace_on_change = true
             
             tags = {
@@ -248,12 +268,24 @@ Using existing default segurity group
             # Using 'user_data' to reference a script file
             user_data = file("entry-script.sh")
             # Create a script file with that name in terraform directory, and place script commands inside
-
+            user_data_replace_on_change = true
             tags = {
                 Name = "${var.env_prefix}-server"
             }
         }
+
+            #'entry-script.sh' file content:
+            #!/bin/bash
+            sudo yum update -y && sudo yum install docker -y
+            sudo systemctl start docker
+            sudo usermod -aG docker ec2-user
+            docker run -p 8080:80 nginx
     ```
+    Note: Op 1 and 2 script commands above are executed by AWS on virtual server.
+
+    Option 3: 
+    Using Terraform provisioners to TF itself run cmds in virtual servers.
+    
 
 Notes:  
 **Security Group**: Firewall at server level.  
