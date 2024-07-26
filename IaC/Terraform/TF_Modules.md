@@ -13,6 +13,7 @@ Modulos allows:
     - E.g 1. Module for AWS EC2 instance, with its configurations around it: Key pair, security group, volumes, aws ami, etc.   
     - E.g 2. Module for VPC including subnet, internet gateway, route table.
     We can reuse that "Web server" module to deploy it in another Region, another environment (Staging, QA, Dev, Prod)
+* A module should be a proper logical abstraction of resources, meaning, it's not worth it to create on resource only, instead should be used to create a whole group of resources that are related (three to four resources). Ej. a webserver with all configurations around it, security group, key pair, volumes.  
 
 ## HOW?
 Using modules created by ourselves.
@@ -20,29 +21,86 @@ Using [existing](https://registry.terraform.io/browse/modules) modules created b
 
 Good practice for dividing modules files:
 - main.tf
-- variable.tf
+- variables.tf
 - outputs.tf
 - providers
 
 Steps:  
 Creating custom module
 * Create "Modules" dir in root.
-* Create dir for each module. E.g. Subnet, web-server.  
-* Creates main.tf, output.tf and variables.tf in each module
+* Create dir for each module. E.g. subnet, web-server.  
+* Creates main.tf, output.tf, providers.tf and variables.tf in each module dir.
 * Write the code in main.tf
-* Define all variables.tf required in variables.tf
+* Define all variables required in variables.tf
 * Use output.tf as needed.  
+
+```bash
+# ./outputs.tf content
+    output "aws-ami-id" {
+    value = data.aws_ami.latest-amazon-linux-image.id
+    }
+
+    output "ec2-public-ip" {
+    value = aws_instance.myapp-server.public_ip
+    }
+```
+
+```bash
+# ./variables.tf content
+    variable "vpc_cidr_block" {}
+    variable "subnet_cidr_block" {}
+    variable "avail_zone" {}
+    variable "env_prefix" {}
+    variable "my_ip" {}
+    variable "instance_type" {}
+    variable "public_key_location" {}
+```
+
+```bash
+# modules/subnet/main.tf
+    resource "aws_subnet" "myapp-subnet-1" {
+    vpc_id = aws_vpc.myapp-vpc.id
+    cidr_block = var.subnet_cidr_block
+    availability_zone = var.avail_zone
+    tags = {
+        Name: "${var.env_prefix}-subnet-1"
+    }
+    }
+
+    resource "aws_internet_gateway" "myapp-igw" {
+    vpc_id = aws_vpc.myapp-vpc.id
+    tags = {
+        Name: "${var.env_prefix}-igw"
+    }
+    }
+
+    resource "aws_default_route_table" "main-rtb" {
+    default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id
+        route {
+            cidr_block = "0.0.0.0/0"
+            gateway_id = aws_internet_gateway.myapp-igw.id
+        }
+        tags = {
+            Name: "${var.env_prefix}-main-rtb"
+        }
+    }
+
+```
+
+
 Using module in root main.tf file  
 ```bash
     module "myapp-subnet" {
     #Windows file system path
-    source = ".\\modules\\subnet"
-    subnet_cidr_block = var.subnet_cidr_block
-    avail_zone = var.avail_zone
-    env_prefix = var.env_prefix
-    vpc_id = aws_vpc.myapp-vpc.id
-    default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id      
+        source = ".\\modules\\subnet"
+        subnet_cidr_block = var.subnet_cidr_block
+        avail_zone = var.avail_zone
+        env_prefix = var.env_prefix
+        vpc_id = aws_vpc.myapp-vpc.id
+        default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id      
     }
 ```
+  ![alt text](/IaC/Terraform/_terra-images/TF_modules_variables.png)
+
 Reference all variables required by the module, make sure variables value are in terraform.tfvars file or you can hardcode when calling th module.
 
