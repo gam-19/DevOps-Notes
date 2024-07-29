@@ -32,11 +32,89 @@ Steps:
    * EKS requires very specific VPC setup, with subnets, route tables, etc.
    * Since we want to use Terraform instead Cloud Formation, then we can use a ready TF Module to create VPC for EKS. 
 
+      1.1 Create a root 'vpc.tf' file in the project dir:  
+        - Use [TF module code](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest?tab=inputs)
+        - Define vpc attributes  
+        - Subnets will be created as part of the module, but we can decide how many subnet, type, cidr addresses.  
+           Best practice:  
+           - 1 private and 1 public per availability zone.
+           E.g. us-east-2 has 3 az, then 6 subnets.
+           - Private subnets for Workload.
+           - Public subnets for external resources like loadbalancer. 
+        - Set AZs dinamically depending on the region.
+           - Define AZs name where subnets will be distribuited, querying Regions AZs.
+        
+        ```bash
+          # Define region and provider where AZ will be created.
+          provider "aws" {
+            region = "us-east-2"
+          }
+          
+          # Variables definition
+          variable "vpc_cidr_block" {}
+          variable "private_subnet_cidr_blocks" {}
+          variable "public_subnet_cidr_blocks" {}
+          
+          # Querying region AZs
+          data "aws_availability_zones" "azs" {}
 
-      - Enable nat gateway
-      - Enable single nat gateway
-      - Enable dns hostnames
-      - Set tags to help Control Plane process like CCM (cloud control manager) to identify what resouces (vpc, subnets, etc) belong to our specific cluster.
+          #We decide the vpc name, this case "myapp-vpc"
+          module "myapp-vpc" {
+            source  = "terraform-aws-modules/vpc/aws"
+            version = "5.1.2"
+
+            #Name of the resource
+            name = "myapp-vpc"
+
+            cidr = "var.vpc_cidr_block"
+
+            #Subnets type and cidr
+            private_subnets = var.private_subnet_cidr_blocks
+            public_subnets = var.public_subnet_cidr_blocks            
+
+            # Set AZs name dinamically
+            azs = data.aws_availability_zones.azs.names
+          }
+        ```
+      ```bash
+         # terraform.tfvars:
+         vpc_cidr_block = "10.0.0.0/16"
+         private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+         public_subnet_cidr_blocks = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+          
+      ```
+      ```bash
+         # providers.tf:
+         terraform {
+            required_providers {
+              aws = {
+                source = "hashicorp/aws"
+                version = "5.20.1"
+              }
+            }
+          }          
+      ```      
+      - Adding other attributes:
+        - Enable nat gateway
+        - Enable single nat gateway
+        - Enable dns hostnames
+        - Set required tags to help Control Plane process like CCM (cloud control manager) to identify what resouces (vpc, subnets, etc) belong to our specific cluster.
+
+      ```bash
+         # Continuing in vpc.tf:
+         # !.... code ...
+
+         # Nat is enabled by dafault, we want to make it explicit
+         enable_nat_gateway = true
+         
+         # By default one gateway per subnet is created, we want all private subnets route their internet traffic through this 'single shared NAT gateway'
+         single_nat_gateway = true
+
+         # When EC2 instances are created beside private and public ip addresses we want hostnames also be assigned.
+         enable_dns_hostnames = true
+
+      ```
+
      AWS VPC Terraform module in Terraform Registry.
   * Create subnets  
      - 1 private and 1 public per availability zone.
