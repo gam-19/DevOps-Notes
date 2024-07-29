@@ -1,15 +1,13 @@
-Oveview, steps:
-Create custom VPC
-Create custom Subnet
-Create Route Table & Internet Gateway
-Provision EC2 Instance
-Deploy nginx Docker container
-Create Security Group (Firewall)  
+### Oveview, steps:
+1. Create custom VPC
+2. Create custom Subnet
+3. Create Route Table & Internet Gateway
+4. Provision EC2 Instance
+5. Deploy nginx Docker container
+6. Create Security Group (Firewall)  
 
 
-
-
-
+### Procedure
 
 1. Create custom **VPC**  
 2. Create custom **Subnet**    
@@ -323,4 +321,7 @@ Using existing default segurity group
 
 Notes:  
 **Security Group**: Firewall at server level.  
-**NACL (Network access list)**: Firewall at subnet level.
+**NACL (Network access list)**: Firewall at subnet level.  
+Examples:
+1. Gitlab project EC2 deployment with [default componentes](https://gitlab.com/gam-19/terraform-learn-4/-/tree/feature/deploy-to-ec2-default-components?ref_type=heads)
+2. Gitlab project EC2 deployment with [modularized components](https://gitlab.com/gam-19/terraform-learn-4/-/tree/feature/modules?ref_type=heads)

@@ -127,54 +127,7 @@ Add this portion to the config file.
 
 ## [9. TShoot Terraform](/IaC/Terraform/TF_TShooting.md)  
 
-### Check current state of resources/infra
-
-a) Check if there is something to create or delete.
-
-```
-  terraform plan
-```
-
-b) Query/Check detailed resources state easely  
-- Check **terrafrom.tfstate**, stores the current state inside this JSON file, it has the current list of resources and their current state.  
-
-    ```bash
-        terraform state
-    ```
-    Has subcommands to see detailed state of terraform.  
-    
-    
-    List all resources in the state file:
-    ```bash
-        terraform state list
-    ```
-    
-    Show all attributes specific resource:
-    ```bash    
-        terraform state show <resource_type.resource_name>
-        terraform state show aws_subnet.dev-subnet-1
-    ```
-
-#### Backup file 
-**terrafrom.tfstate.backup**: Previous state applying/destroying.
-
-## 10. Automating AWS Infrastructure  
-* ### Provisioning EC2 Instane on AWS  
-    1. Create custom **VPC**
-    2. Create custom **Subnet**
-    3. Create **Route Table** & **Internet Gateway**  
-         - Associate it to subnet
-    4. Provision **EC2 Instance**
-    5. Deploy nginx Docker container
-    6. Create Security Group (Firewall)
-
+## 10. Provisioning AWS Infrastructure  
+* ### [Provisioning EC2 Instance on AWS](/IaC/Terraform/HW_provision_EC2_docker.md)    
     Tip:
     * It is recommened NOT to use the default resources AWS gives you, e.g. defaulta vpc, default subnet, etc. Instead create new ones, in case we need to destroy everything.  
-* ### Run Nginx Docker container on EC2 instance
-
-
-Creating a structured terraform project with standard modules.
-Structuring terraform project with standarized modules. (group of similar resources)
-Using modules, how to reference resources inside.
-
-

@@ -94,7 +94,7 @@ Local repository intiated in project working directory. Now all files in working
 # git ls-files   // file is now being tracked by GIT
 ```
 Again one more example:
-
+```
 # vim file2
 # git status  // file is not tracked by git
 # git add file2
@@ -102,13 +102,14 @@ Again one more example:
 # git commit -m "commit file2"
 # ls
 # git ls-files   // file is now being tracked by GIT
-
+```
 ****************************************************
-Scanrio 3: Check commit history or log
-
+### Scenario 3: Check commit history or log
+```
 # git log  // will show the commit history in detail
 # git log --oneline 
 # git show commitid   // will show chnages happened in this commit
+```
 *****************************************************
 Scenario4: COMMIT and ADD an Existing file
 
@@ -191,8 +192,8 @@ Scenario 9: Resetting the commits OR Removing Certain changes
 
 *******************************************************************
 
-Branching
-
+### Branching
+```
 # git status ==> shows master branch
 # git branch b1     // copies all files form master
 # git status
@@ -202,7 +203,7 @@ Branching
 
 # git ls-files // all files same as master on b1
 # git log --oneline // all commit same as master 
-
+```
 Create a file on branch b1
 
 # vim file4 
