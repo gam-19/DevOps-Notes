@@ -96,7 +96,8 @@ Steps:
           }          
       ```      
       - Adding other attributes:
-        - Enable nat gateway
+        - Enable nat gateway  
+        NAT is required for worker nodes, that are in a different vpc, to be able to communicate with  control plane that is another vpc.
         - Enable single nat gateway
         - Enable dns hostnames
         - Set required tags to help Control Plane process like CCM (cloud control manager) to identify what resouces (vpc, subnets, etc) belong to our specific cluster.
@@ -131,35 +132,73 @@ Steps:
       ```
         
 2. Creating EKS cluster  
-   It will create all required resources for the EKS cluster: Control Plan Nodes, Worker Nodes and K8 parts.  
+   AWS EKS Module in terraform registry will create all required resources for the EKS cluster: Control Plan Nodes, Worker Nodes and K8 parts.
+
    * Create  'eks.tf' file  
    * Define some eks attributes
      * Eks module version
      * Cluster name
      * Cluster (K8s) version
      * Subnet and VPC IDs
-     * Work nodes like semi managed node  groups.
+     * Work nodes (node  groups)
          
-         ```bash
-             module "eks" {
-                 source  = "terraform-aws-modules/eks/aws"
-                 version = "20.20.0"
-             
-             # cluster name, same name used in 'vpc.tf'
-             cluster_name = "myapp-eks-cluster"
-             cluster_version = "1.27"
+    ```bash         
+        # From certain version EKS need security group created by us.            
+        resource "aws_security_group" "eks_cluster_sg" {
+            name        = "eks-cluster-sg"
+            description = "Security group for EKS cluster"
+            vpc_id      = module.myapp-vpc.vpc_id
 
-             # Using vpc module ouputs 'private_subnet'
-             subnet_ids = module.myapp-vpc.private_subnets
-             vpc_id    = module.myapp-vpc.vpc_id
+            ingress {
+                from_port   = 443
+                to_port     = 443
+                protocol    = "tcp"
+                cidr_blocks = ["0.0.0.0/0"]
+            }
 
-             # Tags are nor required, but good to use them.
-             tags = {
-                 environment = "development"
-                 application = "myapp"
-             }
-         }
-         ```
+            egress {
+                from_port   = 0
+                to_port     = 0
+                protocol    = "-1"
+                cidr_blocks = ["0.0.0.0/0"]
+            }
+        }
+
+        module "eks" {
+            source  = "terraform-aws-modules/eks/aws"
+            version = "20.20.0"
+        
+        # cluster name, has to be same name used in 'vpc.tf'
+        cluster_name = "myapp-eks-cluster"
+        cluster_version = "1.27"
+
+        # Using vpc module ouputs 'private_subnet'
+        subnet_ids = module.myapp-vpc.private_subnets
+        vpc_id    = module.myapp-vpc.vpc_id
+
+        # Tags are nor required, but good to use them.
+        tags = {
+            environment = "development"
+            application = "myapp"
+        }
+
+        # Refer sg created previously
+        cluster_security_group_id = aws_security_group.eks_cluster_sg.id
+
+        # Using mananged node groups
+        eks_managed_node_groups = {
+            dev = {
+                # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
+                ami_type       = "AL2023_x86_64_STANDARD"
+                instance_types = ["t2.micro"]
+
+                min_size     = 1
+                max_size     = 3
+                desired_size = 2
+            }
+        }
+    }
+    ```
 
        * asdfsadfa  
        * asdfasdf
