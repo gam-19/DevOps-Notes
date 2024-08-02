@@ -247,7 +247,8 @@ kubectl config current-context
 ```
 
 ### Step 5: Add user (in our case 'gam') to EKS Cluster
-EKS Cluster > Access > add Access Entry, select user, give EKS Admin, EKS Cluster Admin.
+EKS > Cluster > myapp-eks-cluster > Access > Create access entry 
+Select user, give AmazonEKSAdminPolicy, AmazonEKSClusterAdminPolicy
 
 ### Step 6: Test kubectl Access
 
