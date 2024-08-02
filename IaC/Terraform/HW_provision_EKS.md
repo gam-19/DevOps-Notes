@@ -46,7 +46,7 @@ Steps:
            - Define AZs name where subnets will be distribuited, querying Regions AZs.
         
         ```bash
-          # Define region and provider where AZ will be created.
+          # Define region and provider where AZs will be created.
           provider "aws" {
             region = "us-east-2"
           }
@@ -59,12 +59,12 @@ Steps:
           # Querying region AZs
           data "aws_availability_zones" "azs" {}
 
-          #We decide the vpc name, this case "myapp-vpc"
+          # We decide the vpc module name, this case "myapp-vpc"
           module "myapp-vpc" {
             source  = "terraform-aws-modules/vpc/aws"
             version = "5.1.2"
 
-            #Name of the resource
+            #Name of the vpc resource
             name = "myapp-vpc"
 
             cidr = "var.vpc_cidr_block"
@@ -73,7 +73,7 @@ Steps:
             private_subnets = var.private_subnet_cidr_blocks
             public_subnets = var.public_subnet_cidr_blocks            
 
-            # Set AZs name dinamically
+            # Set (query) AZs name dinamically
             azs = data.aws_availability_zones.azs.names
           }
         ```
@@ -212,6 +212,55 @@ Steps:
 * TF Modules creates over 50 required resources.
  We dont need to define individual resources, we just need to define two modules, passed the parameters we need, this way having high level configuration, which allows us to tweak with parameters. 
 
+## Required settings to connect using Kubectl
+
+### Step 1: Verify AWS CLI Credentials
+
+In AWS Mgmt Console ensure that your AWS CLI is configured with the correct credentials. Run the following command to check the current configuration:
+
+```powershell
+aws configure list
+```
+
+### Step 2: Verify IAM Role Permissions
+
+Ensure that the IAM role you are using has the necessary permissions. The role should have the following policies attached:
+- `AmazonEKSClusterPolicy`
+- `AmazonEKSWorkerNodePolicy`
+- `AmazonEKS_CNI_Policy`
+- `AmazonEC2ContainerRegistryReadOnly`
+
+### Step 3: Update kubeconfig
+
+Run the following command to update your kubeconfig file with the correct context and credentials:
+
+```powershell
+aws eks update-kubeconfig --name myapp-eks-cluster --region us-east-2
+```
+
+### Step 4: Verify kubeconfig Context
+
+Ensure that the kubeconfig file is using the correct context. Run the following command to check the current context:
+
+```powershell
+kubectl config current-context
+```
+
+### Step 5: Add user (in our case 'gam') to EKS Cluster
+EKS Cluster > Access > add Access Entry, select user, give EKS Admin, EKS Cluster Admin.
+
+### Step 6: Test kubectl Access
+
+Try to list the nodes in your EKS cluster to verify access:
+
+```powershell
+kubectl get nodes
+```
+
+
+```
+
+By following these steps, you should be able to resolve the "Unauthorized" error and access your EKS cluster. If the issue persists, please provide any error messages or additional context for further troubleshooting.
 
 EKS PRICING
 - 0.10 $us/hr + EC2 running.
