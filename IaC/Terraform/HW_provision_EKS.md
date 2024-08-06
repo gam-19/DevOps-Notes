@@ -29,9 +29,9 @@
 
 Steps:
 1. Creating VPC module
-   * In AWS Mgmt Console, we use Cloud Formation template to create VPC for EKS.
+   * Usually in AWS Mgmt Console we use Cloud Formation template to create VPC for EKS.
    * EKS requires very specific VPC setup, with subnets, route tables, etc.
-   * Since we want to use Terraform instead Cloud Formation, then we can use a ready TF Module to create VPC for EKS. 
+   * Since we want to use Terraform instead Cloud Formation, we can use a ready TF Module to create VPC for EKS. 
 
       1.1 Create a root 'vpc.tf' file in the project dir:  
         - Use [TF module code](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest?tab=inputs)
@@ -40,21 +40,27 @@ Steps:
            Best practice:  
            - 1 private and 1 public per availability zone.
            E.g. us-east-2 has 3 az, then 6 subnets.
-           - Private subnets for Workload.
-           - Public subnets for external resources like loadbalancer. 
+           - 3 Private subnets for Workload.
+           - 3 Public subnets for external resources like loadbalancer. 
         - Set AZs dinamically depending on the region.
            - Define AZs name where subnets will be distribuited, querying Regions AZs.
         
         ```bash
-          # Define region and provider where AZs will be created.
-          provider "aws" {
-            region = "us-east-2"
+          # Variable definitions
+          variable "vpc_cidr_block" {
+            description = "CIDR block for the VPC"
+            type        = string
           }
-          
-          # Variables definition
-          variable "vpc_cidr_block" {}
-          variable "private_subnet_cidr_blocks" {}
-          variable "public_subnet_cidr_blocks" {}
+
+          variable "private_subnet_cidr_blocks" {
+            description = "CIDR blocks for the private subnets"
+            type        = list(string)
+          }
+
+          variable "public_subnet_cidr_blocks" {
+            description = "CIDR blocks for the public subnets"
+            type        = list(string)
+          }
           
           # Querying region AZs
           data "aws_availability_zones" "azs" {}
@@ -62,7 +68,7 @@ Steps:
           # We decide the vpc module name, this case "myapp-vpc"
           module "myapp-vpc" {
             source  = "terraform-aws-modules/vpc/aws"
-            version = "5.1.2"
+            version = "5.9.0"
 
             #Name of the vpc resource
             name = "myapp-vpc"
@@ -70,31 +76,13 @@ Steps:
             cidr = "var.vpc_cidr_block"
 
             #Subnets type and cidr
-            private_subnets = var.private_subnet_cidr_blocks
-            public_subnets = var.public_subnet_cidr_blocks            
+            private_subnets   = var.private_subnet_cidr_blocks
+            public_subnets    = var.public_subnet_cidr_blocks            
 
             # Set (query) AZs name dinamically
-            azs = data.aws_availability_zones.azs.names
+            azs               = data.aws_availability_zones.azs.names
           }
-        ```
-      ```bash
-         # terraform.tfvars:
-         vpc_cidr_block = "10.0.0.0/16"
-         private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-         public_subnet_cidr_blocks = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-          
-      ```
-      ```bash
-         # providers.tf:
-         terraform {
-            required_providers {
-              aws = {
-                source = "hashicorp/aws"
-                version = "5.20.1"
-              }
-            }
-          }          
-      ```      
+      ```           
       - Adding other attributes:
         - Enable nat gateway  
         NAT is required for worker nodes, that are in a different vpc, to be able to communicate with  control plane that is another vpc.
@@ -103,9 +91,8 @@ Steps:
         - Set required tags to help Control Plane process like CCM (cloud control manager) to identify what resouces (vpc, subnets, etc) belong to our specific cluster.
 
       ```bash
-         # Continuing in vpc.tf:
-         # !.... code ...
-
+         # Continuation to vpc.tf:
+         
          # Nat is enabled by dafault, we want to make it explicit
          enable_nat_gateway = true
          
@@ -130,7 +117,30 @@ Steps:
             }
 
       ```
-        
+
+
+      ```bash
+         # terraform.tfvars:
+         vpc_cidr_block = "10.0.0.0/16"
+         private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+         public_subnet_cidr_blocks = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+          
+      ```
+      ```bash
+         # providers.tf:
+         terraform {
+            required_providers {
+              aws = {
+                source = "hashicorp/aws"
+                version = "5.60.0"
+              }
+            }
+          }
+
+          provider "aws" {
+            region = "us-east-2"
+          }          
+      ```      
 2. Creating EKS cluster  
    AWS EKS Module in terraform registry will create all required resources for the EKS cluster: Control Plan Nodes, Worker Nodes and K8 parts.
 
@@ -142,71 +152,41 @@ Steps:
      * Subnet and VPC IDs
      * Work nodes (node  groups)
          
-    ```bash         
-        # From certain version EKS need security group created by us.            
-        resource "aws_security_group" "eks_cluster_sg" {
-            name        = "eks-cluster-sg"
-            description = "Security group for EKS cluster"
-            vpc_id      = module.myapp-vpc.vpc_id
+  ```bash               
+    module "eks" {
+      source  = "terraform-aws-modules/eks/aws"
+      version = "20.20.0"
+      
+      # cluster name, has to be same name used in 'vpc.tf'
+      cluster_name = "myapp-eks-cluster"
+      cluster_version = "1.27"
 
-            ingress {
-                from_port   = 443
-                to_port     = 443
-                protocol    = "tcp"
-                cidr_blocks = ["0.0.0.0/0"]
-            }
+      # Making the cluster accesible from internet
+      cluster_endpoint_public_access  = true
 
-            egress {
-                from_port   = 0
-                to_port     = 0
-                protocol    = "-1"
-                cidr_blocks = ["0.0.0.0/0"]
-            }
-        }
+      # Using vpc module ouputs 'private_subnet'
+      subnet_ids = module.myapp-vpc.private_subnets
+      vpc_id    = module.myapp-vpc.vpc_id
 
-        module "eks" {
-            source  = "terraform-aws-modules/eks/aws"
-            version = "20.20.0"
-        
-        # cluster name, has to be same name used in 'vpc.tf'
-        cluster_name = "myapp-eks-cluster"
-        cluster_version = "1.27"
+      # Tags are nor required, but good to use them.
+      tags = {
+          environment = "development"
+          application = "myapp"
+      }
 
-        # Using vpc module ouputs 'private_subnet'
-        subnet_ids = module.myapp-vpc.private_subnets
-        vpc_id    = module.myapp-vpc.vpc_id
+      # Using mananged node groups
+      eks_managed_node_groups = {
+          dev = {
+              instance_types = ["t2.micro"]
+              min_size     = 1
+              max_size     = 3
+              desired_size = 2
+          }      
+      }
 
-        # Tags are nor required, but good to use them.
-        tags = {
-            environment = "development"
-            application = "myapp"
-        }
-
-        # Refer sg created previously
-        cluster_security_group_id = aws_security_group.eks_cluster_sg.id
-
-        # Using mananged node groups
-        eks_managed_node_groups = {
-            dev = {
-                # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-                ami_type       = "AL2023_x86_64_STANDARD"
-                instance_types = ["t2.micro"]
-
-                min_size     = 1
-                max_size     = 3
-                desired_size = 2
-            }
-        }
+      depends_on = [module.myapp-vpc]
     }
-    ```
-
-       * asdfsadfa  
-       * asdfasdf
-       * 
-
-
-
-
+```  
 
 
 * TF Modules creates over 50 required resources.
