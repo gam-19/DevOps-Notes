@@ -212,7 +212,7 @@ Steps:
 * TF Modules creates over 50 required resources.
  We dont need to define individual resources, we just need to define two modules, passed the parameters we need, this way having high level configuration, which allows us to tweak with parameters. 
 
-## Required settings to connect using Kubectl
+## Required settings to connect EKS using Kubectl
 
 ### Step 1: Verify AWS CLI Credentials
 
@@ -224,7 +224,7 @@ aws configure list
 
 ### Step 2: Verify IAM Role Permissions
 
-Ensure that the IAM role you are using has the necessary permissions. The role should have the following policies attached:
+Ensure that the IAM user or role you are using has the necessary permissions. The role should have the following policies attached:
 - `AmazonEKSClusterPolicy`
 - `AmazonEKSWorkerNodePolicy`
 - `AmazonEKS_CNI_Policy`
@@ -259,9 +259,162 @@ kubectl get nodes
 ```
 
 
-```
-
 By following these steps, you should be able to resolve the "Unauthorized" error and access your EKS cluster. If the issue persists, please provide any error messages or additional context for further troubleshooting.
 
 EKS PRICING
 - 0.10 $us/hr + EC2 running.
+
+
+### TROUBLESHOOTING ESK with TERRAFORM
+1. Error: deleting EC2 VPC with terraform destroy
+Some resources, such as the LoadBalancer created using a Kubernetes deployment descriptor, are generated outside of Terraform. For instance, in an EKS environment, AWS interacts to provision an AWS Elastic Load Balancer (ELB), forming a dependency with the VPC. This dependency prevents the VPC from being destroyed by Terraform.  
+
+
+```http
+ Error: deleting EC2 VPC (vpc-0df03a7e940029420): operation error EC2: DeleteVpc, https response error StatusCode: 400, RequestID: 51b3a990-ced1-430f-ba10-16d41513c235, api error DependencyViolation: The vpc 'vpc-0df03a7e940029420' has dependencies and cannot be deleted.
+````
+
+```bash
+
+│ Error: deleting EC2 Internet Gateway (igw-0488324b4d83d940d): detaching EC2 Internet Gateway (igw-0488324b4d83d940d) from VPC (vpc-045cd80a846d4507f): operation error EC2: DetachInternetGateway, https response error StatusCode: 400, RequestID: 4112a20d-5378-4dab-b234-281f6dd41c7c, api error DependencyViolation: Network vpc-045cd80a846d4507f has some mapped public address(es). Please unmap those public address(es) before detaching the gateway.
+│
+│
+╵
+╷
+│ Error: deleting EC2 Subnet (subnet-0049635daf46f15ed): operation error EC2: DeleteSubnet, https response error StatusCode: 400, RequestID: 63485d06-5275-45c5-9658-8f033d9ae278, api error DependencyViolation: The subnet 'subnet-0049635daf46f15ed' has dependencies and cannot be deleted.
+│
+│
+╵
+╷
+│ Error: deleting EC2 Subnet (subnet-085ae8aa7c71ad34d): operation error EC2: DeleteSubnet, https response error StatusCode: 400, RequestID: 45f7e080-16f6-4ffa-af21-9587a879e3ab, api error DependencyViolation: The subnet 'subnet-085ae8aa7c71ad34d' has dependencies and cannot be deleted.
+│
+│
+╵
+╷
+│ Error: deleting EC2 Subnet (subnet-04343bf4208ac7187): operation error EC2: DeleteSubnet, https response error StatusCode: 400, RequestID: d20f1df8-9270-4ac1-91c0-1d246b1362df, api error DependencyViolation: The subnet 'subnet-04343bf4208ac7187' has dependencies and cannot be deleted.
+```
+
+
+The error indicates that there are still dependencies preventing the VPC from being deleted. These dependencies could include:
+
+1. **Internet Gateways**
+2. **NAT Gateways**
+3. **Network Interfaces**
+4. **Security Groups**
+5. **Elastic IPs**
+6. **VPN Gateways**
+
+Let's go through the steps to identify and remove these dependencies.
+
+### Step-by-Step Instructions
+
+1. **Detach and Delete Internet Gateways**
+2. **Delete NAT Gateways**
+3. **Delete Network Interfaces**
+4. **Delete Security Groups**
+5. **Release Elastic IPs**
+6. **Delete VPN Gateways**
+
+### Step 1: Detach and Delete Internet Gateways
+
+List and detach any internet gateways attached to the VPC:
+
+```powershell
+aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=vpc-045cd80a846d4507f"
+```
+
+Detach and delete the internet gateway:
+
+```powershell
+aws ec2 detach-internet-gateway --internet-gateway-id igw-xxxxxxxx --vpc-id vpc-045cd80a846d4507f
+aws ec2 delete-internet-gateway --internet-gateway-id igw-xxxxxxxx
+```
+
+### Step 2: Delete NAT Gateways
+
+List and delete any NAT gateways in the VPC:
+
+```powershell
+aws ec2 describe-nat-gateways --filter "Name=vpc-id,Values=vpc-045cd80a846d4507f"
+```
+
+Delete the NAT gateway:
+
+```powershell
+aws ec2 delete-nat-gateway --nat-gateway-id nat-xxxxxxxx
+```
+
+### Step 3: Delete Network Interfaces
+
+List and delete any network interfaces in the VPC:
+
+```powershell
+aws ec2 describe-network-interfaces --filters "Name=vpc-id,Values=vpc-045cd80a846d4507f"
+```
+
+Delete the network interfaces:
+
+```powershell
+aws ec2 delete-network-interface --network-interface-id eni-xxxxxxxx
+```
+
+### Step 4: Delete Security Groups
+
+List and delete any security groups in the VPC (except the default one):
+
+```powershell
+aws ec2 describe-security-groups --filters "Name=vpc-id,Values=vpc-045cd80a846d4507f"
+```
+
+Delete the security groups:
+
+```powershell
+aws ec2 delete-security-group --group-id sg-xxxxxxxx
+```
+
+### Step 5: Release Elastic IPs
+
+List and release any Elastic IPs associated with the VPC:
+
+```powershell
+aws ec2 describe-addresses --filters "Name=domain,Values=vpc"
+```
+
+Release the Elastic IPs:
+
+```powershell
+aws ec2 release-address --allocation-id eipalloc-xxxxxxxx
+```
+
+### Step 6: Delete VPN Gateways
+
+List and delete any VPN gateways attached to the VPC:
+
+```powershell
+aws ec2 describe-vpn-gateways --filters "Name=attachment.vpc-id,Values=vpc-045cd80a846d4507f"
+```
+
+Detach and delete the VPN gateway:
+
+```powershell
+aws ec2 detach-vpn-gateway --vpn-gateway-id vgw-xxxxxxxx --vpc-id vpc-045cd80a846d4507f
+aws ec2 delete-vpn-gateway --vpn-gateway-id vgw-xxxxxxxx
+```
+
+### Delete the VPC
+
+After removing all dependencies, attempt to delete the VPC again:
+
+```powershell
+aws ec2 delete-vpc --vpc-id vpc-045cd80a846d4507f
+```
+
+### Update Terraform State
+
+If you are managing your infrastructure with Terraform, make sure to update the Terraform state to reflect these manual changes:
+
+```powershell
+terraform state rm 'module.myapp-vpc.aws_vpc.this[0]'
+```
+
+This will ensure that Terraform no longer tracks the deleted VPC, preventing any issues during future `terraform apply` operations.

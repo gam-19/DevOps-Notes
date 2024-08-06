@@ -22,6 +22,56 @@ aws configure
 aws aws sts get-caller-identity
 ```
 
+### RE CONFIGURING AWS CLI ALL OVER AGAIN
+To reset, clear, and reconfigure your AWS CLI, you can follow these steps:
 
+### 1. Remove Existing Configuration Files
+
+Delete the existing AWS CLI configuration and credentials files.
+
+```powershell
+Remove-Item -Recurse -Force $env:USERPROFILE\.aws
+```
+
+### 2. Reconfigure AWS CLI
+
+Run the `aws configure` command to set up your AWS CLI again.
+
+```powershell
+aws configure
+```
+
+You will be prompted to enter your AWS Access Key ID, Secret Access Key, default region name, and default output format.
+
+### Example Configuration
+
+```plaintext
+AWS
+
+ Access Key ID [None]: YOUR_ACCESS_KEY_ID
+AWS Secret Access Key [None]: YOUR_SECRET_ACCESS_KEY
+Default region name [None]: us-east-2
+Default output format [None]: json
+```
+
+### 3. Verify Configuration
+
+After reconfiguring, you can verify the configuration using:
+
+```powershell
+aws configure list
+```
+
+This will display the current configuration settings.
+
+### Additional Steps (Optional)
+
+If you have multiple profiles, you can configure them using the `--profile` flag:
+
+```powershell
+aws configure --profile profile_name
+```
+
+Repeat the configuration steps for each profile you need.
 
 

@@ -10,4 +10,10 @@
 
 OTHER NOTES:
 * TF config files part of the app code in Source Control, which is a best practice, to include everything the application needs: the infrastructure, automation,  application configuration, app code, etc. So the CIC/CD Pipeline has access to them.
-* 
+
+
+
+
+
+* Add new stage to jenkins file
+  * Create SSH Key-pair in AWS. 
